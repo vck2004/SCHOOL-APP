@@ -1,18 +1,45 @@
-import {view} from './view.js'
+import {view} from './view.js';
 import { initializeApp } from "firebase/app";
+import {getAuth, onAuthStateChanged,signOut,sendEmailVerification} from "firebase/auth";
+import {getFirestore, doc, setDoc} from "firebase/firestore";
+import { model } from './model.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCfSuJjOvYdjmGVQswWLL-9Fxn2UyDdf2Y",
-  authDomain: "school-app-990e3.firebaseapp.com",
-  projectId: "school-app-990e3",
-  storageBucket: "school-app-990e3.appspot.com",
-  messagingSenderId: "953965894107",
-  appId: "1:953965894107:web:34d6457eb8c95a3e02affe",
-  measurementId: "G-N00CVDVS29"
+  apiKey: "AIzaSyDUVBAHQRsdJ8ZlJ9_CPdOsytH2bnvkBhY",
+  authDomain: "school-app-bc680.firebaseapp.com",
+  projectId: "school-app-bc680",
+  storageBucket: "school-app-bc680.appspot.com",
+  messagingSenderId: "1036783442547",
+  appId: "1:1036783442547:web:e6b3fb4060a61ac6686806",
+  measurementId: "G-TGQM986E4Q"
 };
 
-window.onload = () => {
-  view.setActiveScreen('loginRegisterPage');
-}
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-export const app = initializeApp(firebaseConfig);
+onAuthStateChanged(auth, (user) => {
+  if(user) {
+    if(user.emailVerified){
+      model.currentUser = user;
+      const uid = user.uid;
+      setDoc(doc(db,user.displayName === 'teacher' ? 'teachers': 'students',uid),{
+          UID: uid,
+          email: auth.currentUser.email,
+      },{merge: true})
+      view.setActiveScreen('mainPage');
+    } else {
+      sendEmailVerification(auth.currentUser);
+      signOut(auth).then(() => {
+        alert('Please verified your email');
+      }).catch((error) => {
+        console.log(error.code);
+        alert(error.message);
+      });
+    }
+  } else {
+    view.setActiveScreen('loginRegisterPage');
+  }
+})
+
+export {app,auth,db}

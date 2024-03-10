@@ -1,5 +1,5 @@
-import {controller} from './controller.js'
-import {component} from './component.js'
+import {controller} from './controller.js';
+import {component} from './component.js';
 
 const view = {}
 
@@ -41,6 +41,9 @@ view.setActiveScreen = (screenName) => {
                 document.getElementById('login_block').style.display = 'none';
                 document.getElementById('signup_block').style.display = 'block';
             })
+            break;
+        case 'mainPage':
+            document.getElementById('app').innerHTML = component.mainPage;
             break;
     }
 }
