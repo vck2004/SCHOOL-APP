@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 window.onload = () => {
-  view.setActiveScreen('loginPage');
+  view.setActiveScreen('loginRegisterPage');
 }
 
 export const app = initializeApp(firebaseConfig);

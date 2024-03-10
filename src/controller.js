@@ -4,20 +4,19 @@ import {view} from './view.js'
 const controller = {}
 
 controller.login = (data) => {
-    view.setErrorMessage('email_error', data.email === '' ? 'Please input email' : '');
-    view.setErrorMessage('password_error', data.password === '' ? 'Please input password' : '');
+    view.setErrorMessage('login_email_error', data.email === '' ? 'Please input email' : '');
+    view.setErrorMessage('login_password_error', data.password === '' ? 'Please input password' : '');
     if (data.email !== '' && data.password !== '') {
         model.login(data);
     }
 }
 
 controller.register = (data) => {
-    view.setErrorMessage('first_name_error', data.firstName === '' ? 'Please input first name' : '');
-    view.setErrorMessage('last_name_error', data.lastName === '' ? 'Please input last name' : '');
-    view.setErrorMessage('email_error', data.email === '' ? 'Please input email' : '');
-    view.setErrorMessage('password_error', data.password === '' ? 'Please input password' : '');
+    view.setErrorMessage('user_type_error', data.userType === '1' ? 'Please choose a user type' : '');
+    view.setErrorMessage('signup_email_error', data.email === '' ? 'Please input email' : '');
+    view.setErrorMessage('signup_password_error', data.password === '' ? 'Please input password' : '');
     view.setErrorMessage('confirm_password_error', data.confirmPassword === '' ? 'Please input confirm password' : data.confirmPassword === data.password ? '' : `Password didn't match`);
-    if (data.firstName !== '' && data.lastName !== '' && data.email !== '' && data.password !== '' && data.confirmPassword === data.password) {
+    if (data.userType !== '1' && data.email !== '' && data.password !== '' && data.confirmPassword === data.password) {
         model.register(data);
     }
 }

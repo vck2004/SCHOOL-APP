@@ -5,26 +5,19 @@ const view = {}
 
 view.setActiveScreen = (screenName) => {
     switch (screenName) {
-        case 'registerPage':
-            document.getElementById('app').innerHTML = component.registerPage;
-            const registerForm = document.getElementById('register_form');
+        case 'loginRegisterPage':
+            document.getElementById('app').innerHTML = component.loginRegisterPage;
+            const registerForm = document.getElementById('signup_form');
             registerForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const data = {
-                    firstName: registerForm.firstName.value,
-                    lastName: registerForm.lastName.value,
+                    userType: registerForm.userType.value,
                     email: registerForm.email.value,
                     password: registerForm.password.value,
                     confirmPassword: registerForm.confirmPassword.value
                 }
                 controller.register(data);
             })
-            document.getElementById('redirect_to_login').addEventListener('click', () => {
-                view.setActiveScreen('loginPage');
-            })
-            break;
-        case 'loginPage':
-            document.getElementById('app').innerHTML = component.loginPage;
             const loginForm = document.getElementById('login_form');
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -34,15 +27,34 @@ view.setActiveScreen = (screenName) => {
                 }
                 controller.login(data);
             })
-            document.getElementById('redirect_to_register').addEventListener('click', () => {
-                view.setActiveScreen('registerPage');
+            const loginSwitchBtn = document.querySelector('.form_switch .login_switch');
+            const signupSwitchBtn = document.querySelector('.form_switch .signup_switch');
+            loginSwitchBtn.addEventListener('click',() => {
+                loginSwitchBtn.classList.add('active');
+                signupSwitchBtn.classList.remove('active');
+                document.getElementById('signup_block').style.display = 'none';
+                document.getElementById('login_block').style.display = 'block';
+            })
+            signupSwitchBtn.addEventListener('click',() => {
+                signupSwitchBtn.classList.add('active');
+                loginSwitchBtn.classList.remove('active');
+                document.getElementById('login_block').style.display = 'none';
+                document.getElementById('signup_block').style.display = 'block';
             })
             break;
     }
 }
 
 view.setErrorMessage = (elementId, content) => {
+    var inputBox = document.getElementById(elementId).parentElement.firstElementChild;
     document.getElementById(elementId).innerText = content;
+    if(content.length > 0){
+        inputBox.classList.add('is-invalid');
+        inputBox.classList.remove('is-valid');
+    } else {
+        inputBox.classList.add('is-valid');
+        inputBox.classList.remove('is-invalid');
+    }
 }
 
 export {view}
