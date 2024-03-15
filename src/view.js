@@ -42,8 +42,14 @@ view.setActiveScreen = (screenName) => {
                 document.getElementById('signup_block').style.display = 'block';
             })
             break;
-        case 'mainPage':
-            document.getElementById('app').innerHTML = component.mainPage;
+        case 'teacherPage':
+            document.getElementById('app').innerHTML = component.teacherPage;
+            break;
+        case 'studentPage':
+            document.getElementById('app').innerHTML = component.studentPage;
+            document.getElementById('side_bar_button').addEventListener('click',() => {
+                document.getElementById('side_bar').classList.toggle('expand');
+            })
             break;
     }
 }

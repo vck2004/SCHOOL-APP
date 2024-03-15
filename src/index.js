@@ -27,7 +27,7 @@ onAuthStateChanged(auth, (user) => {
           UID: uid,
           email: auth.currentUser.email,
       },{merge: true})
-      view.setActiveScreen('mainPage');
+      view.setActiveScreen(user.displayName === 'teacher' ? 'teacherPage': 'studentPage');
     } else {
       sendEmailVerification(auth.currentUser);
       signOut(auth).then(() => {

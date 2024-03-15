@@ -10,98 +10,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/loginSignup.css">
+    <link rel="stylesheet" href="../css/student.css">
 </head>
 <body>
-    <div class="login_signup_container w3-animate-opacity">
-        <div class="welcome_message w3-animate-top">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <h2>WELCOME TO</h2>
-            <h1>OUR SCHOOL</h1>
-        </div>
-        <div class="form_container w3-animate-right">
-            <div class="form_switch btn-group btn-group-lg d-flex">
-                <a class="login_switch btn btn-outline-primary active">Login</a>
-                <a class="signup_switch btn btn-outline-primary">Signup</a>
+    <div class="student_page_container">
+        <aside id="side_bar">
+            <div class="d-flex">
+                <button id="side_bar_button"><i class="fa-solid fa-bars"></i></button>
+                <div class="web_name">Baka School</div>
             </div>
-            <div class="form_content">
-                <div id="login_block" class="w3-animate-opacity">
-                    <h1>Account login</h1>
-                    <form id="login_form" novalidate>
-                        <div class="input_wrapper form-floating">
-                            <input type="email" name="email" id="login_email" class="form-control" autocomplete="off" placeholder="@gmail">
-                            <label for="login_email">Email</label>
-                            <div class="valid-feedback">Look good!</div>
-                            <div class="invalid-feedback" id="login_email_error"></div>
-                        </div>
-                        <div class="input_wrapper form-floating">
-                            <input type="password" id="login_password" class="form-control" name="password" autocomplete="off" placeholder="password">
-                            <label for="login_password">Password</label>
-                            <div class="valid-feedback">Look good!</div>
-                            <div class="invalid-feedback" id="login_password_error"></div>
-                        </div>
-                        <!-- <div id="forgot_password">Forgot Password?</div> -->
-                        <div class="btn-group d-flex"><button class="login_btn btn btn-primary" type="submit">Login</button></div>
-                    </form>
-                    <!-- <p style="margin: 40px 0 10px; font-size: larger; font-family: 'Rajdhani', sans-serif;">Login with your Social Account</p>
-                    <div class="social_link_wrapper">
-                        <i class="fa-brands fa-square-google-plus"></i>
-                        <i class="fa-brands fa-square-facebook"></i>
-                    </div> -->
-                </div>
-                <div id="signup_block" class="w3-animate-opacity" style="display: none;">
-                    <h1>Sign up for free</h1>
-                    <form id="signup_form" novalidate>
-                        <div class="input_wrapper form-floating">
-                            <select type="text" name="userType" id="select_type" class="form-select">
-                                <option value="1" selected>...</option>
-                                <option value="2">Teacher</option>
-                                <option value="3">Student</option>
-                            </select>
-                            <label for="select_type">I am a</label>
-                            <div class="valid-feedback">Look good!</div>
-                            <div class="invalid-feedback" id="user_type_error"></div>
-                        </div>
-                        <div class="input_wrapper form-floating">
-                            <input type="email" id="signup_email" class="form-control" name="email" autocomplete="off" placeholder="email">
-                            <label for="signup_email">Email</label>
-                            <div class="valid-feedback">Look good!</div>
-                            <div class="invalid-feedback" id="signup_email_error"></div>
-                        </div>
-                        <div class="input_wrapper form-floating">
-                            <input type="password" id="signup_password" class="form-control" name="password" autocomplete="off" placeholder="password">
-                            <label for="signup_password">Password</label>
-                            <div class="valid-feedback">Look good!</div>
-                            <div class="invalid-feedback" id="signup_password_error"></div>
-                        </div>
-                        <div class="input_wrapper form-floating">
-                            <input type="password" id="signup_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm">
-                            <label for="signup_confirm_password">Confirm password</label>
-                            <div class="valid-feedback">Look good!</div>
-                            <div class="invalid-feedback" id="confirm_password_error"></div>
-                        </div>
-                        <div class="btn-group d-flex"><button class="signup_btn btn btn-primary">Sign up</button></div>
-                    </form>
-                </div>
-            </div>
+            <ul class="side_bar_nav">
+                <li class="side_bar_item">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Profile</span>
+                </li>
+                <li class="side_bar_item">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Class Info</span>
+                </li>
+                <li class="side_bar_item">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    <span>Score</span>
+                </li>
+                <li class="side_bar_item">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <span>Available Course</span>
+                </li>
+                <li class="side_bar_item">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Feedback</span>
+                </li>
+            </ul>
+        </aside>
+        <div class="welcome_message">
+            <h1>Hello Student!</h1>
         </div>
     </div>
 
     <script src="https://kit.fontawesome.com/e5bf5ebcb5.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script>const loginSwitchBtn = document.querySelector('.form_switch .login_switch');
-        const signupSwitchBtn = document.querySelector('.form_switch .signup_switch');
-        loginSwitchBtn.addEventListener('click',() => {
-            loginSwitchBtn.classList.add('active');
-            signupSwitchBtn.classList.remove('active');
-            document.getElementById('signup_block').style.display = 'none';
-            document.getElementById('login_block').style.display = 'block';
-        })
-        signupSwitchBtn.addEventListener('click',() => {
-            signupSwitchBtn.classList.add('active');
-            loginSwitchBtn.classList.remove('active');
-            document.getElementById('login_block').style.display = 'none';
-            document.getElementById('signup_block').style.display = 'block';
+    <script>
+        document.getElementById('side_bar_button').addEventListener('click',() => {
+            document.getElementById('side_bar').classList.toggle('expand');
         })
     </script>
 </body>

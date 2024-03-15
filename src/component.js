@@ -70,7 +70,47 @@ component.loginRegisterPage = `
     </div>
 `
 component.mainPage = `
-    <div>TEST</div>
+    <div>Admin</div>
+`
+
+component.studentPage = `
+<div class="student_page_container">
+    <aside id="side_bar">
+        <div class="d-flex">
+            <button id="side_bar_button"><i class="fa-solid fa-bars"></i></button>
+            <div class="web_name">Baka School</div>
+        </div>
+        <ul class="side_bar_nav">
+            <li class="side_bar_item">
+                <i class="fa-regular fa-user"></i>
+                <span>Profile</span>
+            </li>
+            <li class="side_bar_item">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Class Info</span>
+            </li>
+            <li class="side_bar_item">
+                <i class="fa-solid fa-book-open-reader"></i>
+                <span>Score</span>
+            </li>
+            <li class="side_bar_item">
+                <i class="fa-regular fa-pen-to-square"></i>
+                <span>Available Course</span>
+            </li>
+            <li class="side_bar_item">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <span>Feedback</span>
+            </li>
+        </ul>
+    </aside>
+    <div class="welcome_message">
+        <h1>Hello Student!</h1>
+    </div>
+</div>
+`
+
+component.teacherPage = `
+    <div>teacher</div>
 `
 
 
