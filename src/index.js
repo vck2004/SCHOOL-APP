@@ -1,8 +1,8 @@
 import {view} from './view.js';
+import { model } from './model.js';
 import { initializeApp } from "firebase/app";
 import {getAuth, onAuthStateChanged,signOut,sendEmailVerification} from "firebase/auth";
 import {getFirestore, doc, setDoc} from "firebase/firestore";
-import { model } from './model.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDUVBAHQRsdJ8ZlJ9_CPdOsytH2bnvkBhY",
@@ -21,20 +21,25 @@ const db = getFirestore(app);
 onAuthStateChanged(auth, (user) => {
   if(user) {
     if(user.emailVerified){
-      model.currentUser = user;
+      model.currentUser = {
+        email: user.email,
+        userType: user.displayName,
+        uid: user.uid,
+      };
       const uid = user.uid;
       setDoc(doc(db,user.displayName === 'teacher' ? 'teachers': 'students',uid),{
           UID: uid,
-          email: auth.currentUser.email,
+          email: user.email,
+          lastLogin: user.metadata.lastSignInTime,
       },{merge: true})
       view.setActiveScreen(user.displayName === 'teacher' ? 'teacherPage': 'studentPage');
     } else {
       sendEmailVerification(auth.currentUser);
       signOut(auth).then(() => {
-        alert('Please verified your email');
+        view.alertSuccess('',"Your account has been created, Please verified your email!");
       }).catch((error) => {
         console.log(error.code);
-        alert(error.message);
+        view.alertError('',error.message);
       });
     }
   } else {

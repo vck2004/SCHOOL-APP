@@ -1,3 +1,4 @@
+/* global setting */
 * {
     margin: 0;
     padding: 0;
@@ -5,4 +6,102 @@
 }
 li {
     list-style: none;
+}
+
+
+/* system message settings */
+/* container */
+.toast_container {
+    z-index: 99;
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    border-radius: 12px;
+    padding: 15px 25px 15px 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transform: translateX(calc(100% + 30px));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+.toast_container.success_toast_container {
+    background: #eff9f6;
+    border-left: 6px solid #7bd3a0;
+}
+.toast_container.fail_toast_container {
+    background: #fbeced;
+    border-left: 6px solid #d64550;
+}
+.toast_container.active {
+    transform: translateX(0%);
+}
+/* text setting */
+.toast_container .toast_content {
+    display: flex;
+    align-items: center;
+}
+.toast_container .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+.toast_container .message .text {
+    font-size: 18px;
+    font-weight: 400;
+    color: #666666;
+    font-family: 'Rajdhani', sans-serif;
+}
+.toast_container .message .text1 {
+    font-weight: 600;
+    color: #333333;
+}
+.toast_container .toast_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 35px;
+    color: white;
+    font-size: 20px;
+    border-radius: 50%;
+}
+.toast_container .close_btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+.toast_container .close_btn:hover{
+    opacity: 1;
+}
+
+/* progress bar setting */
+.toast_container .progress_bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+}
+.toast_container .progress_bar::before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+}
+.toast_container#fail_message .progress_bar::before {
+    background-color: #d64550;
+}
+.toast_container#success_message .progress_bar::before {
+    background-color: #61c9a8;
+}
+.toast_container .progress_bar.active::before{
+    animation: progress 3s linear forwards;
+}
+@keyframes progress {
+    100%{
+        right: 100%;
+    }
 }

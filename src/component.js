@@ -67,6 +67,28 @@ component.loginRegisterPage = `
                 </div>
             </div>
         </div>
+        <div id="fail_message" class="toast_container fail_toast_container">
+            <div class="toast_content">
+                <i class="fa-solid fa-xmark toast_icon" style="background-color: #d64550;"></i>
+                <div class="message">
+                    <span class="text text1">Failed</span>
+                    <span class="text" id="fail_content"></span>
+                </div>
+            </div>
+            <i id="close_fail_toast" class="fa-solid fa-xmark close_btn"></i>
+            <div class="progress_bar" style="background: #fbeced;"></div>
+        </div>
+        <div id="success_message" class="toast_container success_toast_container">
+            <div class="toast_content">
+                <i class="fa-solid fa-check toast_icon" style="background-color: #61c9a8;"></i>
+                <div class="message">
+                    <span class="text text1">Success</span>
+                    <span class="text" id="success_content"></span>
+                </div>
+            </div>
+            <i id="close_success_toast" class="fa-solid fa-xmark close_btn"></i>
+            <div class="progress_bar" style="background: #eff9f6;"></div>
+        </div>
     </div>
 `
 component.mainPage = `
@@ -74,39 +96,94 @@ component.mainPage = `
 `
 
 component.studentPage = `
-<div class="student_page_container">
-    <aside id="side_bar">
-        <div class="d-flex">
-            <button id="side_bar_button"><i class="fa-solid fa-bars"></i></button>
-            <div class="web_name">Baka School</div>
+    <div class="student_page_container">
+        <aside id="side_bar">
+            <div class="d-flex">
+                <button id="side_bar_button"><i class="fa-solid fa-bars"></i></button>
+                <div class="web_name">Baka School</div>
+            </div>
+            <ul class="side_bar_nav">
+                <li class="side_bar_item" id="profile_button">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Profile</span>
+                </li>
+                <li class="side_bar_item">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Class Info</span>
+                </li>
+                <li class="side_bar_item">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    <span>Score</span>
+                </li>
+                <li class="side_bar_item">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <span>Available Course</span>
+                </li>
+                <li class="side_bar_item">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Feedback</span>
+                </li>
+            </ul>
+        </aside>
+        <div class="content_container container-fluid" style="padding-left: 0;padding-right: 0;">
+            <div class="navbar">
+                <img src="../img/default_avatar.jpg" alt="avatar" class="avatar" draggable="false">
+                <button id="log_out_btn" class="btn btn-primary" style="margin: 0 10px;">Log out</button>
+            </div>
+            <div id="main_content"></div>
         </div>
-        <ul class="side_bar_nav">
-            <li class="side_bar_item">
-                <i class="fa-regular fa-user"></i>
-                <span>Profile</span>
-            </li>
-            <li class="side_bar_item">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <span>Class Info</span>
-            </li>
-            <li class="side_bar_item">
-                <i class="fa-solid fa-book-open-reader"></i>
-                <span>Score</span>
-            </li>
-            <li class="side_bar_item">
-                <i class="fa-regular fa-pen-to-square"></i>
-                <span>Available Course</span>
-            </li>
-            <li class="side_bar_item">
-                <i class="fa-solid fa-envelope-open-text"></i>
-                <span>Feedback</span>
-            </li>
-        </ul>
-    </aside>
-    <div class="welcome_message">
-        <h1>Hello Student!</h1>
+        <div id="fail_message" class="toast_container fail_toast_container">
+            <div class="toast_content">
+                <i class="fa-solid fa-xmark toast_icon" style="background-color: #d64550;"></i>
+                <div class="message">
+                    <span class="text text1">Failed</span>
+                    <span class="text" id="fail_content"></span>
+                </div>
+            </div>
+            <i id="close_fail_toast" class="fa-solid fa-xmark close_btn"></i>
+            <div class="progress_bar" style="background: #fbeced;"></div>
+        </div>
+        <div id="success_message" class="toast_container success_toast_container">
+            <div class="toast_content">
+                <i class="fa-solid fa-check toast_icon" style="background-color: #61c9a8;"></i>
+                <div class="message">
+                    <span class="text text1">Success</span>
+                    <span class="text" id="success_content"></span>
+                </div>
+            </div>
+            <i id="close_success_toast" class="fa-solid fa-xmark close_btn"></i>
+            <div class="progress_bar" style="background: #eff9f6;"></div>
+        </div>
     </div>
-</div>
+`
+
+component.studentProfile = `
+    <div class="title">Student Profile</div>
+    <div class="form_wrapper">
+        <form id="user_info_form">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col">
+                        <label for="last_name" class="form-label">Last name</label>
+                        <input id="last_name" type="text" class="form-control" placeholder="Nguyen Van" autocomplete="off">
+                    </div>
+                    <div class="col">
+                        <label for="first_name" class="form-label">First name</label>
+                        <input id="first_name" type="text" class="form-control" placeholder="A" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="phone_number" class="form-label">Phone number</label>
+                <input id="phone_number" type="text" class="form-control" placeholder="0123456789" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label for="DOB" class="form-label">Date of birth</label>
+                <input id="DOB" type="date" class="form-control" autocomplete="off">
+            </div>
+            <button id="save_profile" class="btn btn-primary">Save change</button>
+        </form>
+    </div>
 `
 
 component.teacherPage = `

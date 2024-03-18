@@ -4,25 +4,20 @@
     height: 100vh;
     justify-content: flex-start;
 }
+
 .student_page_container #side_bar {
+    position: sticky;
+    top: 0;
     height: 100vh;
     width: 50px;
     min-width: 50px;
-    z-index: 1000;
     transition: all 0.25s ease-in-out;
     display: flex;
     flex-direction: column;
     background-color: #0d1f37;
     color: #5e9dbe;
     font-family: 'Rajdhani', sans-serif;
-}
-.student_page_container .welcome_message {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     overflow: hidden;
-    width: 100%;
 }
 .student_page_container .side_bar_nav {
     padding: 2rem 0;
@@ -38,14 +33,20 @@
     border-left: 3px solid transparent;
 }
 
-/* text setting */
-.student_page_container .welcome_message h1 {
-    font-weight: bolder;
-    font-size: 100px;
-    position: relative;
-    top: -50px;
-    font-family: 'Rajdhani', sans-serif;
+.student_page_container .navbar{
+    background-color: #0d1f37;
+    position: sticky;
+    top: 0;
+    justify-content: flex-end;
 }
+
+.student_page_container #main_content {
+    background-color: #ecf0f5;
+    padding: 30px;
+    min-height: 679.25px;
+}
+
+/* text setting */
 .student_page_container #side_bar #side_bar_button {
     background-color: transparent;
     padding: 1rem 0.8rem;
@@ -72,6 +73,12 @@
     font-size: 1.15rem;
 }
 
+.student_page_container .avatar{
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+}
+
 /* side bar animation */
 .student_page_container #side_bar.expand {
     width: 250px;
@@ -86,8 +93,26 @@
     border-left: #507cb2 3px solid;
 }
 
+/* user profile setting */
+.student_page_container #main_content .form_wrapper {
+    background-color: white;
+    padding: 30px;
+    font-size: 20px;
+    font-family: 'Rajdhani', sans-serif;
+}
+.student_page_container #main_content .title {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 10px 0 20px 10px;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+
 @media screen and (max-width: 768px) {
-    .student_page_container .welcome_message h1 {
-        font-size: 50px;
+    .student_page_container .content_container {
+        margin-left: 50px;
+    }
+    .student_page_container #side_bar {
+        position: fixed;
     }
 }
