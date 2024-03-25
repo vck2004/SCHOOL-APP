@@ -39,8 +39,8 @@ model.signout = () => {
     })
 }
 
-model.updateProfile = (data) => {
-    const userDoc = doc(db,model.currentUser.userType+'s',model.currentUser.uid);
+model.updateStudentProfile = (data) => {
+    const userDoc = doc(db,'students',model.currentUser.uid);
     updateDoc(userDoc,{
         lastName: data.last,
         firstName: data.first,
@@ -54,12 +54,36 @@ model.updateProfile = (data) => {
 }
 
 model.getStudentProfile = () => {
-    getDoc(doc(db,model.currentUser.userType+'s',model.currentUser.uid)).then((docSnapshot)=>{
+    getDoc(doc(db,'students',model.currentUser.uid)).then((docSnapshot)=>{
         const data = docSnapshot.data();
-        view.setInputValue('first_name',data.firstName);
-        view.setInputValue('last_name',data.lastName);
-        view.setInputValue('phone_number',data.phoneNumber);
-        view.setInputValue('DOB',data.DateOfBirth);
+        view.setInputValue('first_name',data.firstName != undefined ? data.firstName : "");
+        view.setInputValue('last_name',data.lastName != undefined ? data.lastName : "");
+        view.setInputValue('phone_number',data.phoneNumber != undefined ? data.phoneNumber : "");
+        view.setInputValue('DOB',data.DateOfBirth != undefined ? data.DateOfBirth : "");
+    })
+}
+
+model.getTeacherProfile = () => {
+    getDoc(doc(db,'teachers',model.currentUser.uid)).then((docSnapshot)=>{
+        const data = docSnapshot.data();
+        view.setInputValue('first_name',data.firstName != undefined ? data.firstName : "");
+        view.setInputValue('last_name',data.lastName != undefined ? data.lastName : "");
+        view.setInputValue('phone_number',data.phoneNumber != undefined ? data.phoneNumber : "");
+        view.setInputValue('DOB',data.DateOfBirth != undefined ? data.DateOfBirth : "");
+    })
+}
+
+model.updateTeacherProfile = (data) => {
+    const userDoc = doc(db,'teachers',model.currentUser.uid);
+    updateDoc(userDoc,{
+        lastName: data.last,
+        firstName: data.first,
+        phoneNumber: data.phone,
+        DateOfBirth: data.DOB,
+    }) .then(()=>{
+        view.alertSuccess('#save_profile','Update successfully');
+    }) .catch(()=>{
+        view.alertError('#save_profile','Something went wrong, please try again');
     })
 }
 

@@ -43,9 +43,49 @@ view.setActiveScreen = (screenName) => {
                 document.getElementById('signup_block').style.display = 'block';
             })
             break;
+        case 'adminPage':
+            document.getElementById('app').innerHTML = component.adminPage;
+            var mainContent = document.getElementById('main_content');
+            document.getElementById('side_bar_button').addEventListener('click',() => {
+                document.getElementById('side_bar').classList.toggle('expand');
+            })
+            document.getElementById('log_out_btn').addEventListener('click',(e) => {
+                e.preventDefault();
+                model.signout();
+            });
+            document.getElementById('school_info').addEventListener('click',() => {
+                mainContent.innerHTML = component.schoolInfo;
+            })
+            document.getElementById('class_create').addEventListener('click',() => {
+                mainContent.innerHTML = component.classCreate;
+            })
+            
+            break;
         case 'teacherPage':
             document.getElementById('app').innerHTML = component.teacherPage;
-            
+            var mainContent = document.getElementById('main_content');
+            document.getElementById('side_bar_button').addEventListener('click',() => {
+                document.getElementById('side_bar').classList.toggle('expand');
+            })
+            document.getElementById('log_out_btn').addEventListener('click',(e) => {
+                e.preventDefault();
+                model.signout();
+            });
+            document.getElementById('profile_button').addEventListener('click', () => {
+                mainContent.innerHTML = component.teacherProfile;
+                const userProfileForm = document.getElementById('user_info_form');
+                model.getTeacherProfile();
+                userProfileForm.addEventListener('submit',(e) => {
+                    e.preventDefault();
+                    const data = {
+                        first: userProfileForm.first_name.value,
+                        last: userProfileForm.last_name.value,
+                        phone: userProfileForm.phone_number.value,
+                        DOB: userProfileForm.DOB.value,
+                    }
+                    model.updateTeacherProfile(data);
+                })
+            })
             break;
         case 'studentPage':
             document.getElementById('app').innerHTML = component.studentPage;
@@ -69,7 +109,7 @@ view.setActiveScreen = (screenName) => {
                         phone: userProfileForm.phone_number.value,
                         DOB: userProfileForm.DOB.value,
                     }
-                    model.updateProfile(data);
+                    model.updateStudentProfile(data);
                 })
             })
             break;
@@ -109,20 +149,12 @@ view.alertError = (triggerID,content) => {
         failProgress.classList.remove('active');
         if(triggerBtn) triggerBtn.classList.remove('disabled');
     }, 3300)
-
-    document.getElementById('close_fail_toast').addEventListener("click",()=>{
-        failToast.classList.remove('active');
-        setTimeout(()=>{
-            failProgress.classList.remove('active');
-        }, 300)
-    })
 }
 
 view.alertSuccess = (triggerID, content) => {
     const successToast = document.getElementById('success_message'),
     successProgress = document.querySelector('#success_message .progress_bar'),
     triggerBtn = document.querySelector(triggerID);
-    console.log(triggerBtn);
     document.getElementById('success_content').innerHTML = content;
 
     successToast.classList.add('active');
@@ -135,13 +167,6 @@ view.alertSuccess = (triggerID, content) => {
         successProgress.classList.remove('active');
         if(triggerBtn) triggerBtn.classList.remove('disabled');
     }, 3300)
-
-    document.getElementById('close_success_toast').addEventListener("click",()=>{
-        successToast.classList.remove('active');
-        setTimeout(()=>{
-            successProgress.classList.remove('active');
-        }, 300)
-    })
 }
 
 export {view}

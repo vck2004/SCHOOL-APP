@@ -32,14 +32,14 @@ onAuthStateChanged(auth, (user) => {
           email: user.email,
           lastLogin: user.metadata.lastSignInTime,
       },{merge: true})
-      view.setActiveScreen(user.displayName === 'teacher' ? 'teacherPage': 'studentPage');
+      view.setActiveScreen(user.displayName === 'teacher' ? 'teacherPage': (user.displayName === 'student' ? 'studentPage': 'adminPage'));
     } else {
       sendEmailVerification(auth.currentUser);
       signOut(auth).then(() => {
-        view.alertSuccess('',"Your account has been created, Please verified your email!");
+        view.alertSuccess('#f',"Your account has been created, Please verified your email!");
       }).catch((error) => {
         console.log(error.code);
-        view.alertError('',error.message);
+        view.alertError('#f',error.message);
       });
     }
   } else {
