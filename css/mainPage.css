@@ -3,6 +3,7 @@
     display: flex;
     height: 100vh;
     justify-content: flex-start;
+    background-color: #ecf0f5;
 }
 
 .main_page_container #side_bar {
@@ -42,9 +43,7 @@
 }
 
 .main_page_container #main_content {
-    background-color: #ecf0f5;
     padding: 30px;
-    min-height: 679.25px;
 }
 
 /* text setting */
@@ -95,7 +94,7 @@
 }
 
 /* user profile setting */
-.main_page_container #main_content .form_wrapper {
+.main_page_container #main_content .content_container {
     background-color: white;
     padding: 30px;
     font-size: 20px;

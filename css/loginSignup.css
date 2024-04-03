@@ -68,13 +68,6 @@
     font-family: 'Rajdhani', sans-serif;
 } */
 
-/* .login_signup_container .social_link_wrapper .fa-square-google-plus {
-    color: #ff0000;
-}
-.login_signup_container .social_link_wrapper .fa-square-facebook {
-    color: #00008b;
-} */
-
 @media screen and (max-width: 768px) {
     .login_signup_container .form_container {
         width: 100%;

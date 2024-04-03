@@ -1,14 +1,16 @@
 import {auth,db} from './index.js';
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword,updateProfile,signOut} from 'firebase/auth';
-import {doc, updateDoc, getDoc} from 'firebase/firestore';
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut} from 'firebase/auth';
+import {doc, updateDoc, getDoc, arrayUnion, setDoc} from 'firebase/firestore';
 import { view } from './view.js';
 
 
 const model = {}
 
 model.currentUser = undefined;
+model.fromRegister = false;
 
 model.login = (data) => {
+    model.fromRegister = false;
     signInWithEmailAndPassword(auth, data.email, data.password)
     .then((userCredential) => {
         console.log(userCredential);
@@ -16,41 +18,102 @@ model.login = (data) => {
         console.log(user);
     })
     .catch((error) => {
-        console.log(error.code);
         view.alertError('.login_btn',error.message);
     });
 }
 
-model.register = async (data) => {
+model.registerStudent = async (data) => {
     try {
-        await createUserWithEmailAndPassword(auth, data.email, data.password)
-        await updateProfile(auth.currentUser,{
-            displayName: data.userType === '2' ? 'teacher' : 'student',
-        })
+        model.fromRegister = true;
+        await createUserWithEmailAndPassword(auth, data.email, data.password);
+        const user = auth.currentUser;
+        await setDoc(doc(db,'users',user.uid),{
+            UID: user.uid,
+            email: user.email,
+            adminVerification: false,
+            title: "student",
+        },{merge: true})
+        await updateDoc(doc(db,'users','bISuqiIufEYu7CBf4nnmxPT4lAA3'),{pendingStudent: arrayUnion(user.uid)});
+        await signOut(auth);
+        view.alertSuccess('.signup_btn',"Please wait for admin approval!");
     } catch (error) {
-        console.log(error.code);
+        model.fromRegister = false;
         view.alertError('.signup_btn',error.message);
     };
 }
 
-model.signout = () => {
-    signOut(auth).then(()=>{
-        model.currentUser = undefined;
-    })
+model.registerTeacher = async (data) => {
+    try {
+        //model.fromRegister = true;
+        //await createUserWithEmailAndPassword(auth, data.email, data.password);
+        //const user = auth.currentUser;
+        await setDoc(doc(db,'users',user.uid),{
+            UID: user.uid,
+            email: user.email,
+            adminVerification: false,
+            title: "student",
+        },{merge: true})
+        await updateDoc(doc(db,'users','bISuqiIufEYu7CBf4nnmxPT4lAA3'),{pendingStudent: arrayUnion(user.uid)});
+        await signOut(auth);
+        view.alertSuccess('.signup_btn',"Please wait for admin approval!");
+    } catch (error) {
+        model.fromRegister = false;
+        view.alertError('.signup_btn',error.message);
+    };
 }
 
-model.updateStudentProfile = (data) => {
-    const userDoc = doc(db,'students',model.currentUser.uid);
-    updateDoc(userDoc,{
-        lastName: data.last,
-        firstName: data.first,
-        phoneNumber: data.phone,
-        DateOfBirth: data.DOB,
-    }) .then(()=>{
-        view.alertSuccess('#save_profile','Update successfully');
-    }) .catch(()=>{
-        view.alertError('#save_profile','Something went wrong, please try again');
-    })
+model.getTime = async () => {
+    const data = (await getDoc(doc(db,'classes','Session Info'))).data();
+    view.setInputValue('school_year',data.Year);
+    view.setInputValue('current_semester',data.Semester);
+}
+
+model.updateTime = async (data) => {
+    try {
+        await updateDoc(doc(db,'classes','Session Info'),{
+            Year: data.year,
+            Semester: data.semester,
+        })
+        view.alertSuccess('#current_time button','Update successfully');
+    } catch (error) {
+        view.alertError('#current_time button','Something went wrong, please try again');
+    }
+}
+model.updateStudentProfile = async (data) => {
+    try {
+        await updateDoc(doc(db,'students',model.currentUser.uid),{
+            lastName: data.last,
+            firstName: data.first,
+            phoneNumber: data.phone,
+            DateOfBirth: data.DOB,
+        })
+        view.alertSuccess('#user_info_form button','Update successfully');
+    } catch (error) {
+        view.alertError('#user_info_form button','Something went wrong, please try again');
+    }
+}
+model.getSubjectList = async () => {
+    const data = (await getDoc(doc(db,'classes','Session Info'))).data();
+    var table = document.querySelector('.subject_list tbody');
+    if(data.Subjects.length == 0) table.innerHTML = `<tr><td colspan="3">No subject created yet</td></tr>`;
+    for(let sub of data.Subjects){
+        var row = document.createElement("tr");
+        row.innerHTML = `
+        <td>${sub.name}</td>
+        <td>${sub.code}</td>
+        <td><i class="fa-solid fa-trash"></i></td>`;
+        table.appendChild(row);
+    }
+}
+model.addSubject = async (data) => {
+    try {
+        await updateDoc(doc(db,'classes','Session Info'),{
+            Subjects: arrayUnion({name: data.name,code: data.code}),
+        })
+        view.alertSuccess('#current_time button','Add subject successfully');
+    } catch (error) {
+        view.alertError('#current_time button','Something went wrong, please try again');
+    }
 }
 
 model.getStudentProfile = () => {
@@ -81,9 +144,9 @@ model.updateTeacherProfile = (data) => {
         phoneNumber: data.phone,
         DateOfBirth: data.DOB,
     }) .then(()=>{
-        view.alertSuccess('#save_profile','Update successfully');
+        view.alertSuccess('#user_info_form button','Update successfully');
     }) .catch(()=>{
-        view.alertError('#save_profile','Something went wrong, please try again');
+        view.alertError('#user_info_form button','Something went wrong, please try again');
     })
 }
 
