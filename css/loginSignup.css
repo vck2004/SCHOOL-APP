@@ -51,14 +51,6 @@
     font-weight: 300;
     margin: 40px 0;
 }
-.login_signup_container .invalid-feedback {
-    padding-left: 5px;
-    text-align: left;
-    font-style: italic;
-    height: 5px;
-    font-family: 'Rajdhani', sans-serif;
-    display: block;
-}
 
 /* .login_signup_container #forgot_password {
     height: 37px;

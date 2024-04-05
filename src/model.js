@@ -1,16 +1,15 @@
-import {auth,db} from './index.js';
+import {auth,db,secondAuth} from './index.js';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut} from 'firebase/auth';
-import {doc, updateDoc, getDoc, arrayUnion, setDoc} from 'firebase/firestore';
+import {doc, updateDoc, getDoc, setDoc} from 'firebase/firestore';
 import { view } from './view.js';
 
 
 const model = {}
 
 model.currentUser = undefined;
-model.fromRegister = false;
+model.courses = undefined;
 
 model.login = (data) => {
-    model.fromRegister = false;
     signInWithEmailAndPassword(auth, data.email, data.password)
     .then((userCredential) => {
         console.log(userCredential);
@@ -24,61 +23,56 @@ model.login = (data) => {
 
 model.registerStudent = async (data) => {
     try {
-        model.fromRegister = true;
-        await createUserWithEmailAndPassword(auth, data.email, data.password);
-        const user = auth.currentUser;
+        await createUserWithEmailAndPassword(secondAuth, data.email, data.password);
+        const user = secondAuth.currentUser;
         await setDoc(doc(db,'users',user.uid),{
             UID: user.uid,
+            name: data.name,
             email: user.email,
-            adminVerification: false,
             title: "student",
         },{merge: true})
-        await updateDoc(doc(db,'users','bISuqiIufEYu7CBf4nnmxPT4lAA3'),{pendingStudent: arrayUnion(user.uid)});
-        await signOut(auth);
-        view.alertSuccess('.signup_btn',"Please wait for admin approval!");
+        await signOut(secondAuth);
+        view.alertSuccess('.signup_btn',"Student added!");
     } catch (error) {
-        model.fromRegister = false;
         view.alertError('.signup_btn',error.message);
     };
 }
 
 model.registerTeacher = async (data) => {
     try {
-        //model.fromRegister = true;
-        //await createUserWithEmailAndPassword(auth, data.email, data.password);
-        //const user = auth.currentUser;
+        await createUserWithEmailAndPassword(secondAuth, data.email, data.password);
+        const user = secondAuth.currentUser;
         await setDoc(doc(db,'users',user.uid),{
             UID: user.uid,
+            name: data.name,
             email: user.email,
-            adminVerification: false,
-            title: "student",
+            profession: data.profession,
+            title: "teacher",
         },{merge: true})
-        await updateDoc(doc(db,'users','bISuqiIufEYu7CBf4nnmxPT4lAA3'),{pendingStudent: arrayUnion(user.uid)});
-        await signOut(auth);
-        view.alertSuccess('.signup_btn',"Please wait for admin approval!");
+        await signOut(secondAuth);
+        view.alertSuccess('.signup_btn',"Teacher added!");
     } catch (error) {
-        model.fromRegister = false;
         view.alertError('.signup_btn',error.message);
     };
 }
 
-model.getTime = async () => {
-    const data = (await getDoc(doc(db,'classes','Session Info'))).data();
-    view.setInputValue('school_year',data.Year);
-    view.setInputValue('current_semester',data.Semester);
-}
+// model.getTime = async () => {
+//     const data = (await getDoc(doc(db,'classes','Session Info'))).data();
+//     view.setInputValue('school_year',data.Year);
+//     view.setInputValue('current_semester',data.Semester);
+// }
 
-model.updateTime = async (data) => {
-    try {
-        await updateDoc(doc(db,'classes','Session Info'),{
-            Year: data.year,
-            Semester: data.semester,
-        })
-        view.alertSuccess('#current_time button','Update successfully');
-    } catch (error) {
-        view.alertError('#current_time button','Something went wrong, please try again');
-    }
-}
+// model.updateTime = async (data) => {
+//     try {
+//         await updateDoc(doc(db,'classes','Session Info'),{
+//             Year: data.year,
+//             Semester: data.semester,
+//         })
+//         view.alertSuccess('#current_time button','Update successfully');
+//     } catch (error) {
+//         view.alertError('#current_time button','Something went wrong, please try again');
+//     }
+// }
 model.updateStudentProfile = async (data) => {
     try {
         await updateDoc(doc(db,'students',model.currentUser.uid),{
@@ -92,29 +86,30 @@ model.updateStudentProfile = async (data) => {
         view.alertError('#user_info_form button','Something went wrong, please try again');
     }
 }
-model.getSubjectList = async () => {
-    const data = (await getDoc(doc(db,'classes','Session Info'))).data();
-    var table = document.querySelector('.subject_list tbody');
-    if(data.Subjects.length == 0) table.innerHTML = `<tr><td colspan="3">No subject created yet</td></tr>`;
-    for(let sub of data.Subjects){
-        var row = document.createElement("tr");
-        row.innerHTML = `
-        <td>${sub.name}</td>
-        <td>${sub.code}</td>
-        <td><i class="fa-solid fa-trash"></i></td>`;
-        table.appendChild(row);
-    }
-}
-model.addSubject = async (data) => {
-    try {
-        await updateDoc(doc(db,'classes','Session Info'),{
-            Subjects: arrayUnion({name: data.name,code: data.code}),
-        })
-        view.alertSuccess('#current_time button','Add subject successfully');
-    } catch (error) {
-        view.alertError('#current_time button','Something went wrong, please try again');
-    }
-}
+
+// model.getSubjectList = async () => {
+//     const data = (await getDoc(doc(db,'classes','Session Info'))).data();
+//     let table = document.querySelector('.subject_list tbody');
+//     if(data.Subjects.length == 0) table.innerHTML = `<tr><td colspan="3">No subject created yet</td></tr>`;
+//     for(let sub of data.Subjects){
+//         let row = document.createElement("tr");
+//         row.innerHTML = `
+//         <td>${sub.name}</td>
+//         <td>${sub.code}</td>
+//         <td><i class="fa-solid fa-trash"></i></td>`;
+//         table.appendChild(row);
+//     }
+// }
+// model.addSubject = async (data) => {
+//     try {
+//         await updateDoc(doc(db,'classes','Session Info'),{
+//             Subjects: arrayUnion({name: data.name,code: data.code}),
+//         })
+//         view.alertSuccess('#current_time button','Add subject successfully');
+//     } catch (error) {
+//         view.alertError('#current_time button','Something went wrong, please try again');
+//     }
+// }
 
 model.getStudentProfile = () => {
     getDoc(doc(db,'students',model.currentUser.uid)).then((docSnapshot)=>{

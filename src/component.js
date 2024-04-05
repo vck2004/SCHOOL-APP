@@ -1,6 +1,6 @@
 const component = {}
 
-component.loginRegisterPage = `
+component.loginPage = `
     <div class="login_signup_container w3-animate-opacity">
         <div class="welcome_message w3-animate-top">
             <i class="fa-solid fa-graduation-cap"></i>
@@ -8,10 +8,6 @@ component.loginRegisterPage = `
             <h1>OUR SCHOOL</h1>
         </div>
         <div class="form_container w3-animate-right">
-            <div class="form_switch btn-group btn-group-lg d-flex">
-                <a class="login_switch btn btn-outline-primary active">Login</a>
-                <a class="signup_switch btn btn-outline-primary">Signup</a>
-            </div>
             <div class="form_content">
                 <div id="login_block" class="w3-animate-opacity">
                     <h1>Account login</h1>
@@ -30,27 +26,6 @@ component.loginRegisterPage = `
                         <div class="btn-group d-flex"><button class="login_btn btn btn-primary" type="submit">Login</button></div>
                     </form>
                 </div>
-                <div id="signup_block" class="w3-animate-opacity" style="display: none;">
-                    <h1>Sign up for free</h1>
-                    <form id="signup_form" novalidate>
-                        <div class="input_wrapper form-floating">
-                            <input type="email" id="signup_email" class="form-control" name="email" autocomplete="off" placeholder="email">
-                            <label for="signup_email">Email</label>
-                            <div class="invalid-feedback" id="signup_email_error"></div>
-                        </div>
-                        <div class="input_wrapper form-floating">
-                            <input type="password" id="signup_password" class="form-control" name="password" autocomplete="off" placeholder="password">
-                            <label for="signup_password">Password</label>
-                            <div class="invalid-feedback" id="signup_password_error"></div>
-                        </div>
-                        <div class="input_wrapper form-floating">
-                            <input type="password" id="signup_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm">
-                            <label for="signup_confirm_password">Confirm password</label>
-                            <div class="invalid-feedback" id="confirm_password_error"></div>
-                        </div>
-                        <div class="btn-group d-flex"><button class="signup_btn btn btn-primary">Sign up</button></div>
-                    </form>
-                </div>
             </div>
         </div>
         <div id="fail_message" class="toast_container fail_toast_container">
@@ -62,16 +37,6 @@ component.loginRegisterPage = `
                 </div>
             </div>
             <div class="progress_bar" style="background: #fbeced;"></div>
-        </div>
-        <div id="success_message" class="toast_container success_toast_container">
-            <div class="toast_content">
-                <i class="fa-solid fa-check toast_icon" style="background-color: #61c9a8;"></i>
-                <div class="message">
-                    <span class="text text1">Success</span>
-                    <span class="text" id="success_content"></span>
-                </div>
-            </div>
-            <div class="progress_bar" style="background: #eff9f6;"></div>
         </div>
     </div>
 `
@@ -131,31 +96,62 @@ component.adminPage = `
         </div>
     </div>
 `
-component.teacherRegisterForm = `
-    <div class="title">Add a teacher</div>
+component.accountCreation = `
+    <div class="title">Account Creation</div>
     <div class="content_container">
-        <form id="teacher_signup_form" novalidate>
-            <div class="mb-3">
-                <label for="signup_email" class="form-label">Email</label>
-                <input type="email" id="signup_email" class="form-control" name="email" autocomplete="off" placeholder="teacher@gmail.com">
-                <div class="invalid-feedback" id="signup_email_error"></div>
-            </div>
-            <div class="mb-3">
-                <label for="signup_password" class="form-label">Password</label>
-                <input type="password" id="signup_password" class="form-control" name="password" autocomplete="off" placeholder="password">
-                <div class="invalid-feedback" id="signup_password_error"></div>
-            </div>
-            <div class="mb-3">
-            <label for="signup_confirm_password" class="form-label">Confirm password</label>
-                <input type="password" id="signup_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm password">
-                <div class="invalid-feedback" id="confirm_password_error"></div>
-            </div>
-            <button class="signup_btn btn btn-primary">Add Teacher</button>
-        </form>
-    </div>
-    <div class="title">Student Verification</div>
-    <div class="content_container">
-        
+        <div class="row">
+            <form id="teacher_signup_form" class="col" novalidate>
+                <div class="mb-3">
+                    <label for="teacher_email" class="form-label">Teacher email</label>
+                    <input type="email" id="teacher_email" class="form-control" name="email" autocomplete="off" placeholder="teacher@gmail.com">
+                    <div class="invalid-feedback" id="teacher_email_error"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="teacher_name" class="form-label">Teacher name</label>
+                    <input type="text" id="teacher_name" class="form-control" name="name" autocomplete="off" placeholder="teacher@gmail.com">
+                    <div class="invalid-feedback" id="teacher_name_error"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="teacher_profession" class="form-label">Profession</label>
+                    <input type="text" id="teacher_profession" class="form-control" name="profession" autocomplete="off" placeholder="teacher@gmail.com">
+                    <div class="invalid-feedback" id="teacher_profession_error"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="teacher_password" class="form-label">Password</label>
+                    <input type="password" id="teacher_password" class="form-control" name="password" autocomplete="off" placeholder="password">
+                    <div class="invalid-feedback" id="teacher_password_error"></div>
+                </div>
+                <div class="mb-3">
+                <label for="teacher_confirm_password" class="form-label">Confirm password</label>
+                    <input type="password" id="teacher_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm password">
+                    <div class="invalid-feedback" id="teacher_confirm_password_error"></div>
+                </div>
+                <button class="signup_btn btn btn-primary">Add Teacher</button>
+            </form>
+            <form id="student_signup_form" class="col" novalidate>
+                <div class="mb-3">
+                    <label for="student_email" class="form-label">Student email</label>
+                    <input type="email" id="student_email" class="form-control" name="email" autocomplete="off" placeholder="student@gmail.com">
+                    <div class="invalid-feedback" id="student_email_error"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="student_name" class="form-label">Student name</label>
+                    <input type="text" id="student_name" class="form-control" name="name" autocomplete="off" placeholder="student@gmail.com">
+                    <div class="invalid-feedback" id="student_name_error"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="student_password" class="form-label">Password</label>
+                    <input type="password" id="student_password" class="form-control" name="password" autocomplete="off" placeholder="password">
+                    <div class="invalid-feedback" id="student_password_error"></div>
+                </div>
+                <div class="mb-3">
+                <label for="student_confirm_password" class="form-label">Confirm password</label>
+                    <input type="password" id="student_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm password">
+                    <div class="invalid-feedback" id="student_confirm_password_error"></div>
+                </div>
+                <button class="signup_btn btn btn-primary">Add Student</button>
+            </form>
+        </div>
     </div>
     `
 
@@ -164,24 +160,36 @@ component.classCreate = `
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Add New Class</h1>
+                <h1 class="modal-title fs-5">Add New Course</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="class_info_form">
                     <div class="mb-3">
-                        <label for="class_name" class="form-label">Class name</label>
+                        <label for="class_name" class="form-label">Course name</label>
                         <input id="class_name" type="text" class="form-control" autocomplete="off">
                     </div>
                     <div class="mb-3">
                         <label for="class_subject" class="form-label">Subject</label>
                         <input id="class_subject" type="text" class="form-control" autocomplete="off">
                     </div>
+                    <div class="mb-3">
+                        <label for="class_teacher" class="form-label">Choose a teacher</label>
+                        <input id="class_teacher" type="text" class="form-control" autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lesson_amount" class="form-label">Required lesson</label>
+                        <input id="lesson_amount" type="text" class="form-control" autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label for="study_day" class="form-label">Choose a day</label>
+                        <input id="study_day" type="text" class="form-control" autocomplete="off">
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -198,47 +206,48 @@ component.classCreate = `
     </table>
 </div>
 `
-component.schoolInfo = `
-    <div class="title">School Info</div>
-    <div class="content_container">
-        <div class="row">
-            <form id="subject_info" class="col">
-                <div class="mb-3">
-                    <label for="subject_name" class="form-label">Subject name</label>
-                    <input id="subject_name" type="text" class="form-control" autocomplete="off">
-                </div>
-                <div class="mb-3">
-                    <label for="subject_code" class="form-label">Subject code</label>
-                    <input id="subject_code" type="text" class="form-control" autocomplete="off">
-                </div>
-                <button class="btn btn-primary">Add Subject</button>
-            </form>
-            <form id="current_time" class="col">
-                <div class="mb-3">
-                    <label for="school_year" class="form-label">School Year</label>
-                    <input id="school_year" type="text" class="form-control" autocomplete="off">
-                </div>
-                <div class="mb-3">
-                    <label for="current_semester" class="form-label">Semester</label>
-                    <input id="current_semester" type="text" class="form-control" autocomplete="off">
-                </div>
-                <button class="btn btn-primary">Save Change</button>
-            </form>
-        </div>
 
-        <table class="subject_list table mt-3 table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Code</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-`
+// component.schoolInfo = `
+//     <div class="title">School Info</div>
+//     <div class="content_container">
+//         <div class="row">
+//             <form id="subject_info" class="col">
+//                 <div class="mb-3">
+//                     <label for="subject_name" class="form-label">Subject name</label>
+//                     <input id="subject_name" type="text" class="form-control" autocomplete="off">
+//                 </div>
+//                 <div class="mb-3">
+//                     <label for="subject_code" class="form-label">Subject code</label>
+//                     <input id="subject_code" type="text" class="form-control" autocomplete="off">
+//                 </div>
+//                 <button class="btn btn-primary">Add Subject</button>
+//             </form>
+//             <form id="current_time" class="col">
+//                 <div class="mb-3">
+//                     <label for="school_year" class="form-label">School Year</label>
+//                     <input id="school_year" type="text" class="form-control" autocomplete="off">
+//                 </div>
+//                 <div class="mb-3">
+//                     <label for="current_semester" class="form-label">Semester</label>
+//                     <input id="current_semester" type="text" class="form-control" autocomplete="off">
+//                 </div>
+//                 <button class="btn btn-primary">Save Change</button>
+//             </form>
+//         </div>
+
+//         <table class="subject_list table mt-3 table-bordered">
+//             <thead>
+//                 <tr>
+//                     <th scope="col">Name</th>
+//                     <th scope="col">Code</th>
+//                     <th scope="col"></th>
+//                 </tr>
+//             </thead>
+//             <tbody>
+//             </tbody>
+//         </table>
+//     </div>
+// `
 
 component.studentPage = `
     <div class="main_page_container">
@@ -413,10 +422,6 @@ component.teacherProfile = `
                 <label for="DOB" class="form-label">Date of birth</label>
                 <input id="DOB" type="date" class="form-control" autocomplete="off">
             </div>
-            // <div class="mb-3">
-            //     <label for="degree_pic" class="form-label">Degrees</label>
-            //     <input id="degree_pic" type="file" class="form-control" autocomplete="off" multiple>
-            // </div>
             <button class="btn btn-primary">Save change</button>
         </form>
     </div>
