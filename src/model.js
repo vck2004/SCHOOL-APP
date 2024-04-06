@@ -32,6 +32,7 @@ model.registerStudent = async (data) => {
             title: "student",
         },{merge: true})
         await signOut(secondAuth);
+        view.clearInput();
         view.alertSuccess('.signup_btn',"Student added!");
     } catch (error) {
         view.alertError('.signup_btn',error.message);
@@ -50,6 +51,7 @@ model.registerTeacher = async (data) => {
             title: "teacher",
         },{merge: true})
         await signOut(secondAuth);
+        view.clearInput();
         view.alertSuccess('.signup_btn',"Teacher added!");
     } catch (error) {
         view.alertError('.signup_btn',error.message);

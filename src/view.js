@@ -144,8 +144,16 @@ view.setActiveScreen = (screenName) => {
     }
 }
 
+view.clearInput = () => {
+    let inputBoxes = document.querySelectorAll('input');
+    for(let inp of inputBoxes){
+        inp.value = "";
+        inp.classList.remove('is-invalid');
+        inp.classList.remove('is-valid');
+    }
+}
 view.setErrorMessage = (elementId, content) => {
-    let inputBox = document.getElementById(elementId).parentElement.firstElementChild;
+    let inputBox = document.getElementById(elementId).parentElement.querySelector('input');
     document.getElementById(elementId).innerText = content;
     if(content.length > 0){
         inputBox.classList.add('is-invalid');
@@ -155,12 +163,6 @@ view.setErrorMessage = (elementId, content) => {
         inputBox.classList.remove('is-invalid');
     }
 }
-
-view.setInputValue = (elementId, content) => {
-    const inputBox = document.getElementById(elementId);
-    inputBox.value = content;
-}
-
 view.alertError = (triggerID,content) => {
     const failToast = document.getElementById('fail_message'),
     failProgress = document.querySelector('#fail_message .progress_bar'),
@@ -178,7 +180,6 @@ view.alertError = (triggerID,content) => {
         for(let btn of triggerBtns) btn.classList.remove('disabled');
     }, 3300)
 }
-
 view.alertSuccess = (triggerID, content) => {
     const successToast = document.getElementById('success_message'),
     successProgress = document.querySelector('#success_message .progress_bar'),
@@ -187,7 +188,7 @@ view.alertSuccess = (triggerID, content) => {
 
     successToast.classList.add('active');
     successProgress.classList.add('active');
-    for(let btn of triggerBtns) {btn.classList.add('disabled');console.log("test")};
+    for(let btn of triggerBtns) btn.classList.add('disabled');
     setTimeout(()=>{
         successToast.classList.remove('active');
     }, 3000)
@@ -195,6 +196,13 @@ view.alertSuccess = (triggerID, content) => {
         successProgress.classList.remove('active');
         for(let btn of triggerBtns) btn.classList.remove('disabled');
     }, 3300)
+}
+
+
+
+view.setInputValue = (elementId, content) => {
+    const inputBox = document.getElementById(elementId);
+    inputBox.value = content;
 }
 
 export {view}

@@ -40,7 +40,6 @@ component.loginPage = `
         </div>
     </div>
 `
-
 component.adminPage = `
     <div class="main_page_container">
         <aside id="side_bar">
@@ -108,12 +107,12 @@ component.accountCreation = `
                 </div>
                 <div class="mb-3">
                     <label for="teacher_name" class="form-label">Teacher name</label>
-                    <input type="text" id="teacher_name" class="form-control" name="name" autocomplete="off" placeholder="teacher@gmail.com">
+                    <input type="text" id="teacher_name" class="form-control" name="name" autocomplete="off" placeholder="Nguyen Van A">
                     <div class="invalid-feedback" id="teacher_name_error"></div>
                 </div>
                 <div class="mb-3">
                     <label for="teacher_profession" class="form-label">Profession</label>
-                    <input type="text" id="teacher_profession" class="form-control" name="profession" autocomplete="off" placeholder="teacher@gmail.com">
+                    <input type="text" id="teacher_profession" class="form-control" name="profession" autocomplete="off" placeholder="ABC">
                     <div class="invalid-feedback" id="teacher_profession_error"></div>
                 </div>
                 <div class="mb-3">
@@ -126,7 +125,7 @@ component.accountCreation = `
                     <input type="password" id="teacher_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm password">
                     <div class="invalid-feedback" id="teacher_confirm_password_error"></div>
                 </div>
-                <button class="signup_btn btn btn-primary">Add Teacher</button>
+                <button class="signup_btn btn btn-primary mt-1">Add Teacher</button>
             </form>
             <form id="student_signup_form" class="col" novalidate>
                 <div class="mb-3">
@@ -136,7 +135,7 @@ component.accountCreation = `
                 </div>
                 <div class="mb-3">
                     <label for="student_name" class="form-label">Student name</label>
-                    <input type="text" id="student_name" class="form-control" name="name" autocomplete="off" placeholder="student@gmail.com">
+                    <input type="text" id="student_name" class="form-control" name="name" autocomplete="off" placeholder="Nguyen Van B">
                     <div class="invalid-feedback" id="student_name_error"></div>
                 </div>
                 <div class="mb-3">
@@ -149,12 +148,11 @@ component.accountCreation = `
                     <input type="password" id="student_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm password">
                     <div class="invalid-feedback" id="student_confirm_password_error"></div>
                 </div>
-                <button class="signup_btn btn btn-primary">Add Student</button>
+                <button class="signup_btn btn btn-primary mt-1">Add Student</button>
             </form>
         </div>
     </div>
-    `
-
+`
 component.classCreate = `
 <div class="modal fade" id="add_class_modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-lg">
@@ -170,15 +168,17 @@ component.classCreate = `
                         <input id="class_name" type="text" class="form-control" autocomplete="off">
                     </div>
                     <div class="mb-3">
+                        <label for="class_teacher" class="form-label">Choose a teacher</label>
+                        <select id="class_teacher" type="text" class="form-control" autocomplete="off">
+                            <option value="" selected>...</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="class_subject" class="form-label">Subject</label>
                         <input id="class_subject" type="text" class="form-control" autocomplete="off">
                     </div>
                     <div class="mb-3">
-                        <label for="class_teacher" class="form-label">Choose a teacher</label>
-                        <input id="class_teacher" type="text" class="form-control" autocomplete="off">
-                    </div>
-                    <div class="mb-3">
-                        <label for="lesson_amount" class="form-label">Required lesson</label>
+                        <label for="lesson_amount" class="form-label">Course Duration</label>
                         <input id="lesson_amount" type="text" class="form-control" autocomplete="off">
                     </div>
                     <div class="mb-3">
