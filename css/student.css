@@ -27,19 +27,20 @@
 }
 #main_content .basic_personal_infor{
     width: 60%;
-    font-size: 19px;
+    font-size: 22px;
     line-height: 10px;
     margin-top: 1%;
 }
 #main_content .student_name{
-    font-size: 25px;
-    font-family: "Merriweather", serif;
-    font-weight: 400;
+    font-size: 30px;
+    font-family: 'Rajdhani', serif;
+    font-weight: 600;
     font-style: normal;
     margin-bottom: 2%;
 }
 .b{
     font-weight: 400;
+    font-family: 'Rajdhani', sans-serif;
 
 }
 
@@ -103,4 +104,5 @@
     font-size: 18px;
     color: #0062cc;
 }
+
 
