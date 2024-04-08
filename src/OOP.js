@@ -37,7 +37,8 @@ class teacher extends user {
 }
 
 class admin extends user {
-    teacherList;
+    teacherList = [];
+    getTeacherList(){model.getTeacherList();};
     addTeacher(data){controller.registerTeacher(data)};
     addStudent(data){controller.registerStudent(data)};
 }

@@ -18,4 +18,4 @@ const auth = getAuth(app);
 const secondAuth = getAuth(secondApp);
 const db = getFirestore(app);
 
-export {app,auth,db,secondAuth}
+export {auth,db,secondAuth}

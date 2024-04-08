@@ -5,6 +5,10 @@ import {onAuthStateChanged} from "firebase/auth";
 import {doc,getDoc} from "firebase/firestore";
 import {student,teacher,admin,course} from './OOP.js';
 
+// async function getData(thing, id) {
+//     return (await getDoc(doc(db, thing, id))).data();
+// }
+
 onAuthStateChanged(auth, async (user) => {
     if(user) {
         const userDoc = (await getDoc(doc(db,"users",user.uid))).data();
@@ -51,6 +55,20 @@ controller.registerTeacher= (data) => {
     view.setErrorMessage('teacher_confirm_password_error', data.confirmPassword === '' ? 'Please input confirm password' : data.confirmPassword === data.password ? '' : `Password didn't match`);
     if (data.email !== '' && data.name !== '' && data.profession !== '' && data.password !== '' && data.confirmPassword === data.password) {
         model.registerTeacher(data);
+    }
+}
+
+controller.addClass = (data) => {
+    view.setErrorMessage('course_name_error', data.name === '' ? 'Please input course name' : '');
+    view.setErrorMessage('class_room_error', data.room === '' ? 'Please input class room' : '');
+    view.setErrorMessage('teacher_select_error', data.teacherName === '...' ? 'Please select a teacher' : '',"#teacher_input");
+    view.setErrorMessage('course_duration_error', data.beginWeek === '' ? 'Please pick the duration of the course' : '',"#begin_date");
+    view.setErrorMessage('course_duration_error', data.endWeek === '' ? 'Please pick the duration of the course' : data.beginWeek >= data.endWeek ? 'The course duration is wrong!' : '',"#end_date");
+    view.setErrorMessage('course_time_error', data.dayOfWeek === '...' ? 'Please pick the day of the class' : '',"#study_day");
+    view.setErrorMessage('course_time_error', data.beginTime === '' ? 'Please pick the time of the class' : '',"#begin_time");
+    view.setErrorMessage('course_time_error', data.endTime === '' ? 'Please pick the time of the class' : data.beginTime >= data.endTime ? 'The class time is wrong!' : '',"#end_time");
+    if (data.name !== '' && data.room !== '' && data.teacherName !== '' && data.beginWeek !== '' && data.endWeek !== '' && data.beginTime !== '' && data.endTime !== '' && data.dayOfWeek !== '' && data.beginTime < data.endTime && data.beginWeek < data.endWeek) {
+        model.addClass(data);
     }
 }
 
