@@ -1,0 +1,24 @@
+#class_name{
+    text-align: center;
+}
+
+.teacher_link{
+    text-align: center;
+}
+
+.teacher_link #teacher_link_gmail{
+    font-size: 17px;
+}
+
+.teacher_link #teacher_link_avatar{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.accordion{
+    --bs-accordion-btn-bg:white;
+    --bs-accordion-active-bg:lightblue;
+    --bs-accordion-active-color:black;
+}
