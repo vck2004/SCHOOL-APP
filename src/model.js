@@ -1,13 +1,12 @@
 import {auth,db,secondAuth} from './index.js';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut} from 'firebase/auth';
-import {doc, updateDoc, getDoc, setDoc} from 'firebase/firestore';
+import {doc, updateDoc, getDoc, setDoc,query,collection,where,getDocs, addDoc, arrayUnion} from 'firebase/firestore';
 import { view } from './view.js';
-
+import { DateTime, Interval } from 'luxon';
 
 const model = {}
 
 model.currentUser = undefined;
-model.courses = undefined;
 
 model.login = (data) => {
     signInWithEmailAndPassword(auth, data.email, data.password)
@@ -21,6 +20,7 @@ model.login = (data) => {
     });
 }
 
+// admin account creation
 model.registerStudent = async (data) => {
     try {
         await createUserWithEmailAndPassword(secondAuth, data.email, data.password);
@@ -30,14 +30,15 @@ model.registerStudent = async (data) => {
             name: data.name,
             email: user.email,
             title: "student",
+            timetable: [],
         },{merge: true})
         await signOut(secondAuth);
+        view.clearInput();
         view.alertSuccess('.signup_btn',"Student added!");
     } catch (error) {
         view.alertError('.signup_btn',error.message);
     };
 }
-
 model.registerTeacher = async (data) => {
     try {
         await createUserWithEmailAndPassword(secondAuth, data.email, data.password);
@@ -48,8 +49,10 @@ model.registerTeacher = async (data) => {
             email: user.email,
             profession: data.profession,
             title: "teacher",
+            timetable: [],
         },{merge: true})
         await signOut(secondAuth);
+        view.clearInput();
         view.alertSuccess('.signup_btn',"Teacher added!");
     } catch (error) {
         view.alertError('.signup_btn',error.message);
@@ -61,7 +64,6 @@ model.registerTeacher = async (data) => {
 //     view.setInputValue('school_year',data.Year);
 //     view.setInputValue('current_semester',data.Semester);
 // }
-
 // model.updateTime = async (data) => {
 //     try {
 //         await updateDoc(doc(db,'classes','Session Info'),{
@@ -73,6 +75,57 @@ model.registerTeacher = async (data) => {
 //         view.alertError('#current_time button','Something went wrong, please try again');
 //     }
 // }
+
+// admin class creation
+model.getTeacherList = async () => {
+    const q = query(collection(db,"users"),where("title","==","teacher"));
+    let docs = await getDocs(q);
+    docs.forEach((doc) => {
+        model.currentUser.teacherList.push(doc.data());
+    })
+    view.addOptions(model.currentUser.teacherList);
+}
+model.addClass = async (data) => {
+    try {
+        const teacherRef = await getDoc(doc(db,"users",data.teacherID));
+        let teacherTime = teacherRef.data().timetable;
+        let conflicted = teacherTime.filter((d) => {
+            return (!(d.endWeek <= data.beginWeek || d.beginWeek >= data.endWeek) && d.weekday == data.dayOfWeek && !(d.endTime <= data.beginTime || d.beginTime >= data.endTime));
+        })
+        if(conflicted.length > 0){
+            throw {message: "The teacher are busy at that time!"};
+        } else {
+            const courseRef = await addDoc(collection(db,"classes"),data);
+            await updateDoc(doc(db,"users",data.teacherID),{
+                classIncharge: arrayUnion(courseRef.id),
+                timetable: arrayUnion({
+                    classID: courseRef.id,
+                    startWeek: data.beginWeek,
+                    endWeek: data.endWeek,
+                    weekday: data.dayOfWeek,
+                    beginTime: data.beginTime,
+                    endTime: data.endTime,
+                })
+            });
+        }
+        view.clearInput();
+        view.alertSuccess("#f","Class created successfully!");
+        // teacherTime.sort((a,b) => {
+        //     if(a.startWeek != b.startWeek){
+        //         return a.startWeek > b.startWeek? 1 : -1;
+        //     } else if (a.weekday != b.weekday){
+        //         return a.weekday - b.weekday;
+        //     } else if(a.beginTime != b.beginTime){
+        //         return a.beginTime > b.beginTime? 1 : -1;
+        //     } else {
+        //         return 0;
+        //     }
+        // })
+    } catch (error) {
+        view.alertError("#f",error.message);
+    }
+}
+
 model.updateStudentProfile = async (data) => {
     try {
         await updateDoc(doc(db,'students',model.currentUser.uid),{

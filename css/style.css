@@ -20,7 +20,7 @@ li {
 /* system message settings */
 /* container */
 .toast_container {
-    z-index: 99;
+    z-index: 2000;
     position: fixed;
     top: 20px;
     right: 30px;

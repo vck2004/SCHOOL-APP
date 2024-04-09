@@ -40,7 +40,6 @@ component.loginPage = `
         </div>
     </div>
 `
-
 component.adminPage = `
     <div class="main_page_container">
         <aside id="side_bar">
@@ -108,12 +107,12 @@ component.accountCreation = `
                 </div>
                 <div class="mb-3">
                     <label for="teacher_name" class="form-label">Teacher name</label>
-                    <input type="text" id="teacher_name" class="form-control" name="name" autocomplete="off" placeholder="teacher@gmail.com">
+                    <input type="text" id="teacher_name" class="form-control" name="name" autocomplete="off" placeholder="Nguyen Van A">
                     <div class="invalid-feedback" id="teacher_name_error"></div>
                 </div>
                 <div class="mb-3">
                     <label for="teacher_profession" class="form-label">Profession</label>
-                    <input type="text" id="teacher_profession" class="form-control" name="profession" autocomplete="off" placeholder="teacher@gmail.com">
+                    <input type="text" id="teacher_profession" class="form-control" name="profession" autocomplete="off" placeholder="ABC">
                     <div class="invalid-feedback" id="teacher_profession_error"></div>
                 </div>
                 <div class="mb-3">
@@ -126,7 +125,7 @@ component.accountCreation = `
                     <input type="password" id="teacher_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm password">
                     <div class="invalid-feedback" id="teacher_confirm_password_error"></div>
                 </div>
-                <button class="signup_btn btn btn-primary">Add Teacher</button>
+                <button class="signup_btn btn btn-primary mt-1">Add Teacher</button>
             </form>
             <form id="student_signup_form" class="col" novalidate>
                 <div class="mb-3">
@@ -136,7 +135,7 @@ component.accountCreation = `
                 </div>
                 <div class="mb-3">
                     <label for="student_name" class="form-label">Student name</label>
-                    <input type="text" id="student_name" class="form-control" name="name" autocomplete="off" placeholder="student@gmail.com">
+                    <input type="text" id="student_name" class="form-control" name="name" autocomplete="off" placeholder="Nguyen Van B">
                     <div class="invalid-feedback" id="student_name_error"></div>
                 </div>
                 <div class="mb-3">
@@ -149,12 +148,11 @@ component.accountCreation = `
                     <input type="password" id="student_confirm_password" class="form-control" name="confirmPassword" autocomplete="off" placeholder="confirm password">
                     <div class="invalid-feedback" id="student_confirm_password_error"></div>
                 </div>
-                <button class="signup_btn btn btn-primary">Add Student</button>
+                <button class="signup_btn btn btn-primary mt-1">Add Student</button>
             </form>
         </div>
     </div>
-    `
-
+`
 component.classCreate = `
 <div class="modal fade" id="add_class_modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-lg">
@@ -164,32 +162,68 @@ component.classCreate = `
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="class_info_form">
+                <form id="course_info_form">
                     <div class="mb-3">
-                        <label for="class_name" class="form-label">Course name</label>
-                        <input id="class_name" type="text" class="form-control" autocomplete="off">
+                        <label for="course_name" class="form-label">Course name</label>
+                        <input id="course_name" type="text" class="form-control" autocomplete="off">
+                        <div class="invalid-feedback" id="course_name_error"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="class_subject" class="form-label">Subject</label>
-                        <input id="class_subject" type="text" class="form-control" autocomplete="off">
+                        <label for="class_room" class="form-label">Room</label>
+                        <input id="class_room" type="text" class="form-control" autocomplete="off">
+                        <div class="invalid-feedback" id="class_room_error"></div>
+                    </div>
+                    <div class="teacher_select_wrapper mb-3">
+                        <div class="form-label">Choose a teacher</div>
+                        <div class="select_btn">
+                            <input id="teacher_input" type="text" readonly value="...">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="invalid-feedback" id="teacher_select_error"></div>
+                        <div class="content">
+                            <div class="search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" placeholder="search" autocomplete="off" class="form-control" id="search">
+                            </div>
+                            <ul class="options"></ul>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="class_teacher" class="form-label">Choose a teacher</label>
-                        <input id="class_teacher" type="text" class="form-control" autocomplete="off">
+                        <label for="course_subject" class="form-label">Subject</label>
+                        <input id="course_subject" type="text" class="form-control" disabled>
                     </div>
-                    <div class="mb-3">
-                        <label for="lesson_amount" class="form-label">Required lesson</label>
-                        <input id="lesson_amount" type="text" class="form-control" autocomplete="off">
+                    <label for="begin_date" class="form-label">Course duration</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">From</span>
+                        <input id="begin_date" type="week" class="form-control">
+                        <span class="input-group-text">To</span>
+                        <input id="end_date" type="week" class="form-control">
+                        <div class="invalid-feedback" id="course_duration_error"></div>
                     </div>
-                    <div class="mb-3">
-                        <label for="study_day" class="form-label">Choose a day</label>
-                        <input id="study_day" type="text" class="form-control" autocomplete="off">
+                    <label for="begin_time" class="form-label">Classes time</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">From</span>
+                        <input id="begin_time" type="time" class="form-control" min="07:00" max="17:00">
+                        <span class="input-group-text">To</span>
+                        <input id="end_time" type="time" class="form-control" min="07:00" max="17:00">
+                        <span class="input-group-text">on</span>
+                        <select id="study_day" class="form-select">
+                            <option value="..." selected>...</option>
+                            <option value="0">Monday</option>
+                            <option value="1">Tuesday</option>
+                            <option value="2">Wednesday</option>
+                            <option value="3">Thursday</option>
+                            <option value="4">Friday</option>
+                            <option value="5">Saturday</option>
+                            <option value="6">Sunday</option>
+                        </select>
+                        <div class="invalid-feedback" id="course_time_error"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add course</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

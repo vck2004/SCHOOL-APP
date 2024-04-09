@@ -79,14 +79,42 @@ view.setActiveScreen = (screenName) => {
             // })
             document.getElementById('class_create').addEventListener('click',() => {
                 mainContent.innerHTML = component.classCreate;
-                const createForm = document.getElementById("class_info_form");
-                createForm.parentElement.parentElement.addEventListener("submit",(e) => {
+                model.currentUser.getTeacherList();
+                //Teacher Select
+                const wrapper = document.querySelector('.teacher_select_wrapper');
+                const selectBtn = wrapper.querySelector('.select_btn');
+                const inp = wrapper.querySelector("#search");
+                selectBtn.addEventListener("click",() => {
+                    wrapper.classList.toggle("active");
+                })
+                inp.addEventListener("keyup",() => {
+                    let found = [];
+                    let searched = inp.value.toLowerCase();
+                    found = model.currentUser.teacherList.filter((data) => {
+                        let realData = data.profession + " - " + data.name;
+                        return realData.toLowerCase().startsWith(searched);
+                    })
+                    view.addOptions(found);
+                })
+                // get data
+                const createForm = document.getElementById("course_info_form");
+                createForm.addEventListener("submit",(e) => {
                     e.preventDefault();
                     const data = {
-                        email: createForm.email.value,
-                        password: createForm.password.value
+                        name: createForm.course_name.value,
+                        room: createForm.class_room.value,
+                        teacherName: createForm.teacher_input.value,
+                        subject: createForm.course_subject.value,
+                        beginWeek: createForm.begin_date.value,
+                        endWeek: createForm.end_date.value,
+                        beginTime: createForm.begin_time.value,
+                        endTime: createForm.end_time.value,
+                        dayOfWeek: createForm.study_day.value,
+                        teacherID: selectBtn.id,
+                        studentList: [],
+                        studentCap: 40,
                     }
-                    controller.login(data);
+                    controller.addClass(data);
                 })
             })
             
@@ -144,8 +172,22 @@ view.setActiveScreen = (screenName) => {
     }
 }
 
-view.setErrorMessage = (elementId, content) => {
-    let inputBox = document.getElementById(elementId).parentElement.firstElementChild;
+view.clearInput = () => {
+    let inputBoxes = document.querySelectorAll('input');
+    let selectBoxes = document.querySelectorAll('select');
+    for(let inp of inputBoxes){
+        inp.value = "";
+        inp.classList.remove('is-invalid');
+        inp.classList.remove('is-valid');
+    }
+    for(let sel of selectBoxes){
+        sel.selectedIndex = 0;
+        sel.classList.remove('is-invalid');
+        sel.classList.remove('is-valid');
+    }
+}
+view.setErrorMessage = (elementId, content,specificInput = "#f") => {
+    let inputBox = document.getElementById(elementId).parentElement.querySelector(specificInput === "#f"? 'input' : specificInput);
     document.getElementById(elementId).innerText = content;
     if(content.length > 0){
         inputBox.classList.add('is-invalid');
@@ -155,12 +197,6 @@ view.setErrorMessage = (elementId, content) => {
         inputBox.classList.remove('is-invalid');
     }
 }
-
-view.setInputValue = (elementId, content) => {
-    const inputBox = document.getElementById(elementId);
-    inputBox.value = content;
-}
-
 view.alertError = (triggerID,content) => {
     const failToast = document.getElementById('fail_message'),
     failProgress = document.querySelector('#fail_message .progress_bar'),
@@ -178,7 +214,6 @@ view.alertError = (triggerID,content) => {
         for(let btn of triggerBtns) btn.classList.remove('disabled');
     }, 3300)
 }
-
 view.alertSuccess = (triggerID, content) => {
     const successToast = document.getElementById('success_message'),
     successProgress = document.querySelector('#success_message .progress_bar'),
@@ -187,7 +222,7 @@ view.alertSuccess = (triggerID, content) => {
 
     successToast.classList.add('active');
     successProgress.classList.add('active');
-    for(let btn of triggerBtns) {btn.classList.add('disabled');console.log("test")};
+    for(let btn of triggerBtns) btn.classList.add('disabled');
     setTimeout(()=>{
         successToast.classList.remove('active');
     }, 3000)
@@ -195,6 +230,32 @@ view.alertSuccess = (triggerID, content) => {
         successProgress.classList.remove('active');
         for(let btn of triggerBtns) btn.classList.remove('disabled');
     }, 3300)
+}
+view.addOptions = (array) => {
+    const wrapper = document.querySelector('.teacher_select_wrapper'),
+    selectBtn = wrapper.querySelector('.select_btn'),
+    sub = document.querySelector('#course_subject'),
+    opt = wrapper.querySelector(".options");
+    opt.innerHTML = array.length ? "" : `<p>No result found!</p>`;
+    array.forEach((data) => {
+        let li = document.createElement("li");
+        li.id = data.UID;
+        li.classList.add(data.profession);
+        li.innerHTML = `${data.profession} - ${data.name}`;
+        li.addEventListener("click",(e) => {
+            wrapper.classList.remove("active");
+            selectBtn.id = e.target.id;
+            selectBtn.firstElementChild.value = e.target.innerText.split(" - ")[1];
+            sub.value = e.target.classList[0];
+        })
+        opt.appendChild(li);
+    })
+}
+
+
+view.setInputValue = (elementId, content) => {
+    const inputBox = document.getElementById(elementId);
+    inputBox.value = content;
 }
 
 export {view}

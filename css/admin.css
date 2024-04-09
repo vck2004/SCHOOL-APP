@@ -1,6 +1,92 @@
+/* container settings */
 #main_content .class_info_container {
     background-color: white;
     padding: 30px;
     font-size: 20px;
     font-family: 'Rajdhani', sans-serif;
+}
+#main_content .teacher_select_wrapper {
+    position: relative;
+}
+
+/* select setting */
+#main_content .select_btn{
+    height: 35px;
+    font-size: 1rem;
+    display: flex;
+    padding: .375rem .75rem;
+    border-radius: .375rem;
+    background: white;
+    align-items: center;
+    border: 1px solid #dee2e6;
+    justify-content: space-between;
+}
+#main_content .select_btn i{
+    font-size: 12px;
+}
+#main_content .select_btn input{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+/* dropdown setting */
+.select_btn, .options li {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
+#main_content .content {
+    z-index: 5;
+    display: none;
+    position: absolute;
+    width: 100%;
+    padding: .375rem .75rem;
+    border-radius: .375rem;
+    background: white;
+    border: 1px solid #dee2e6;
+}
+.content .search {
+    position: relative;
+}
+.search i {
+    left: 10px;
+    position: absolute;
+    line-height: 40px;
+}
+.search input {
+    padding-left: 35px;
+    margin-bottom: 10px;
+}
+.content .options {
+    max-height: 175px;
+    padding: 0 7px 0 0;
+    overflow-y: auto;
+}
+.options li {
+    height: 35px;
+    border-radius: 5px;
+    padding: 0 13px;
+    border-radius: .375rem;
+}
+
+/* animation */
+.options li:hover {
+    background: #f2f2f2;
+}
+
+.teacher_select_wrapper.active .content {
+    display: block !important;
+}
+
+.options::-webkit-scrollbar {
+    width: 7px;
+}
+.options::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 25px;
+}
+.options::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 25px;
 }
