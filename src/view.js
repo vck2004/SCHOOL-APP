@@ -155,18 +155,18 @@ view.setActiveScreen = (screenName) => {
             });
             document.getElementById('profile_button').addEventListener('click', () => {
                 mainContent.innerHTML = component.studentProfile;
-                const userProfileForm = document.getElementById('user_info_form');
-                model.getStudentProfile();
-                userProfileForm.addEventListener('submit',(e) => {
-                    e.preventDefault();
-                    const data = {
-                        first: userProfileForm.first_name.value,
-                        last: userProfileForm.last_name.value,
-                        phone: userProfileForm.phone_number.value,
-                        DOB: userProfileForm.DOB.value,
-                    }
-                    model.updateStudentProfile(data);
-                })
+                // const userProfileForm = document.getElementById('user_info_form');
+                // model.getStudentProfile();
+                // userProfileForm.addEventListener('submit',(e) => {
+                //     e.preventDefault();
+                //     const data = {
+                //         first: userProfileForm.first_name.value,
+                //         last: userProfileForm.last_name.value,
+                //         phone: userProfileForm.phone_number.value,
+                //         DOB: userProfileForm.DOB.value,
+                //     }
+                //     model.updateStudentProfile(data);
+                // })
             })
             break;
     }

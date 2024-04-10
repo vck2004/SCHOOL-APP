@@ -2,7 +2,6 @@ import {auth,db,secondAuth} from './index.js';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut} from 'firebase/auth';
 import {doc, updateDoc, getDoc, setDoc,query,collection,where,getDocs, addDoc, arrayUnion} from 'firebase/firestore';
 import { view } from './view.js';
-import { DateTime, Interval } from 'luxon';
 
 const model = {}
 
@@ -125,6 +124,8 @@ model.addClass = async (data) => {
         view.alertError("#f",error.message);
     }
 }
+
+
 
 model.updateStudentProfile = async (data) => {
     try {
