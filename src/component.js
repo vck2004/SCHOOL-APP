@@ -40,6 +40,7 @@ component.loginPage = `
         </div>
     </div>
 `
+
 component.adminPage = `
     <div class="main_page_container">
         <aside id="side_bar">
@@ -342,7 +343,6 @@ component.studentPage = `
         </div>
     </div>
 `
-
 component.studentProfile = `
     <div class="modal fade" id="edit_profile_modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-lg">
@@ -424,6 +424,8 @@ component.studentProfile = `
         </div>
     </div>
 `
+component.joinClass = ``
+
 
 component.teacherPage = `
     <div class="main_page_container">

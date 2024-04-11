@@ -161,14 +161,4 @@ model.updateProfile = async (data) => {
 //     }
 // }
 
-model.getTeacherProfile = () => {
-    getDoc(doc(db,'teachers',model.currentUser.uid)).then((docSnapshot)=>{
-        const data = docSnapshot.data();
-        view.setInputValue('first_name',data.firstName != undefined ? data.firstName : "");
-        view.setInputValue('last_name',data.lastName != undefined ? data.lastName : "");
-        view.setInputValue('phone_number',data.phoneNumber != undefined ? data.phoneNumber : "");
-        view.setInputValue('DOB',data.DateOfBirth != undefined ? data.DateOfBirth : "");
-    })
-}
-
 export {model}

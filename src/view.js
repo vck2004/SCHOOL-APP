@@ -1,7 +1,6 @@
 import {controller} from './controller.js';
 import {component} from './component.js';
 import { model } from './model.js';
-import { doc } from 'firebase/firestore';
 
 const view = {}
 
@@ -184,7 +183,6 @@ view.setStudentInfo = () => {
     userProfileForm.address.value = model.currentUser.address;
     userProfileForm.gender.value = model.currentUser.gender;
     userProfileForm.study_field.value = model.currentUser.studyField;
-
     const basicInfoTab = document.getElementById("basic_info_tab_pane");
     basicInfoTab.innerHTML = ` 
     <div class="row mb-3">
@@ -297,14 +295,6 @@ view.addOptions = (array) => {
         })
         opt.appendChild(li);
     })
-}
-
-
-
-
-view.setValue = (element, content) => {
-    const inputBox = document.querySelector(element);
-    inputBox.value = content;
 }
 
 export {view}
