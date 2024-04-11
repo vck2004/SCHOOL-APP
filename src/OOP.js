@@ -9,8 +9,6 @@ class user {
         this.email = email;
         this.title = title;
     }
-    gender;
-    name;
     signout(){
         signOut(auth).then(()=>{
             model.currentUser = undefined;
@@ -23,8 +21,13 @@ class student extends user {
         super(uid,email,title);
         this.name = data.name;
     }
-    joinedClass;
-    requestJoinSubject;
+    setUserProfile(data){
+        this.phoneNumber = data.phoneNumber? data.phoneNumber : "";
+        this.dateOfBirth = data.dateOfBirth? data.dateOfBirth : "";
+        this.address = data.address? data.address : "";
+        this.gender = data.gender? data.gender : "...";
+        this.studyField = data.studyField? data.studyField : "";
+    }
 }
 
 class teacher extends user {

@@ -7,6 +7,7 @@
 }
 
 .main_page_container #side_bar {
+    z-index: 99;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -36,10 +37,13 @@
 }
 
 .main_page_container .navbar{
+    z-index: 98;
     background-color: #0d1f37;
     position: sticky;
     top: 0;
     justify-content: flex-end;
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
 }
 
 .main_page_container #main_content {
@@ -93,9 +97,10 @@
     border-left: #507cb2 3px solid;
 }
 
-/* user profile setting */
+/* content setting */
 .main_page_container #main_content .content_container {
     background-color: white;
+    border-radius: 2rem;
     padding: 30px;
     font-size: 20px;
     font-family: 'Rajdhani', sans-serif;
@@ -109,7 +114,7 @@
 
 
 @media screen and (max-width: 768px) {
-    .main_page_container .content_container {
+    .main_page_container #main_content {
         margin-left: 50px;
     }
     .main_page_container #side_bar {

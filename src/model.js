@@ -2,7 +2,6 @@ import {auth,db,secondAuth} from './index.js';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut} from 'firebase/auth';
 import {doc, updateDoc, getDoc, setDoc,query,collection,where,getDocs, addDoc, arrayUnion} from 'firebase/firestore';
 import { view } from './view.js';
-import { DateTime, Interval } from 'luxon';
 
 const model = {}
 
@@ -126,17 +125,15 @@ model.addClass = async (data) => {
     }
 }
 
-model.updateStudentProfile = async (data) => {
+// student
+model.updateProfile = async (data) => {
     try {
-        await updateDoc(doc(db,'students',model.currentUser.uid),{
-            lastName: data.last,
-            firstName: data.first,
-            phoneNumber: data.phone,
-            DateOfBirth: data.DOB,
-        })
-        view.alertSuccess('#user_info_form button','Update successfully');
+        await updateDoc(doc(db,'users',model.currentUser.uid),data);
+        model.currentUser.setUserProfile(data);
+        view.setStudentInfo();
+        view.alertSuccess('.modal-footer button:nth-child(2)','Update successfully');
     } catch (error) {
-        view.alertError('#user_info_form button','Something went wrong, please try again');
+        view.alertError('.modal-footer button:nth-child(2)','Something went wrong, please try again');
     }
 }
 
@@ -163,39 +160,5 @@ model.updateStudentProfile = async (data) => {
 //         view.alertError('#current_time button','Something went wrong, please try again');
 //     }
 // }
-
-model.getStudentProfile = () => {
-    getDoc(doc(db,'students',model.currentUser.uid)).then((docSnapshot)=>{
-        const data = docSnapshot.data();
-        view.setInputValue('first_name',data.firstName != undefined ? data.firstName : "");
-        view.setInputValue('last_name',data.lastName != undefined ? data.lastName : "");
-        view.setInputValue('phone_number',data.phoneNumber != undefined ? data.phoneNumber : "");
-        view.setInputValue('DOB',data.DateOfBirth != undefined ? data.DateOfBirth : "");
-    })
-}
-
-model.getTeacherProfile = () => {
-    getDoc(doc(db,'teachers',model.currentUser.uid)).then((docSnapshot)=>{
-        const data = docSnapshot.data();
-        view.setInputValue('first_name',data.firstName != undefined ? data.firstName : "");
-        view.setInputValue('last_name',data.lastName != undefined ? data.lastName : "");
-        view.setInputValue('phone_number',data.phoneNumber != undefined ? data.phoneNumber : "");
-        view.setInputValue('DOB',data.DateOfBirth != undefined ? data.DateOfBirth : "");
-    })
-}
-
-model.updateTeacherProfile = (data) => {
-    const userDoc = doc(db,'teachers',model.currentUser.uid);
-    updateDoc(userDoc,{
-        lastName: data.last,
-        firstName: data.first,
-        phoneNumber: data.phone,
-        DateOfBirth: data.DOB,
-    }) .then(()=>{
-        view.alertSuccess('#user_info_form button','Update successfully');
-    }) .catch(()=>{
-        view.alertError('#user_info_form button','Something went wrong, please try again');
-    })
-}
 
 export {model}

@@ -155,21 +155,66 @@ view.setActiveScreen = (screenName) => {
             });
             document.getElementById('profile_button').addEventListener('click', () => {
                 mainContent.innerHTML = component.studentProfile;
+                const upperInfo = document.querySelector('.basic_info_container');
+                upperInfo.children[0].innerHTML = model.currentUser.name;
+                upperInfo.children[1].innerHTML = model.currentUser.email;
+                view.setStudentInfo();
                 const userProfileForm = document.getElementById('user_info_form');
-                model.getStudentProfile();
                 userProfileForm.addEventListener('submit',(e) => {
                     e.preventDefault();
                     const data = {
-                        first: userProfileForm.first_name.value,
-                        last: userProfileForm.last_name.value,
-                        phone: userProfileForm.phone_number.value,
-                        DOB: userProfileForm.DOB.value,
+                        phoneNumber: userProfileForm.phone_number.value,
+                        dateOfBirth: userProfileForm.DOB.value,
+                        address: userProfileForm.address.value,
+                        gender: userProfileForm.gender.value,
+                        studyField: userProfileForm.study_field.value,
                     }
-                    model.updateStudentProfile(data);
+                    model.updateProfile(data);
                 })
             })
             break;
     }
+}
+
+view.setStudentInfo = () => {
+    const userProfileForm = document.getElementById('user_info_form');
+    userProfileForm.phone_number.value = model.currentUser.phoneNumber;
+    userProfileForm.DOB.value = model.currentUser.dateOfBirth;
+    userProfileForm.address.value = model.currentUser.address;
+    userProfileForm.gender.value = model.currentUser.gender;
+    userProfileForm.study_field.value = model.currentUser.studyField;
+    const basicInfoTab = document.getElementById("basic_info_tab_pane");
+    basicInfoTab.innerHTML = ` 
+    <div class="row mb-3">
+        <div class="col-md-6 fw-bold">Name</div>
+        <div class="col-md-6">${model.currentUser.name}</div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6 fw-bold">Gender</div>
+        <div class="col-md-6">${model.currentUser.gender}</div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6 fw-bold">Date Of Birth</div>
+        <div class="col-md-6">${model.currentUser.dateOfBirth}</div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6 fw-bold">Study field</div>
+        <div class="col-md-6">${model.currentUser.studyField}</div>
+</div>`
+    const contactInfoTab = document.getElementById("contact_info_tab_pane");
+    contactInfoTab.innerHTML = `
+    <div class="row mb-3">
+        <div class="col-md-6 fw-bold">Email</div>
+        <div class="col-md-6">${model.currentUser.email}</div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6 fw-bold">Phone</div>
+        <div class="col-md-6">${model.currentUser.phoneNumber}</div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6 fw-bold">Address</div>
+        <div class="col-md-6">${model.currentUser.address}</div>
+    </div>`
 }
 
 view.clearInput = () => {
@@ -250,12 +295,6 @@ view.addOptions = (array) => {
         })
         opt.appendChild(li);
     })
-}
-
-
-view.setInputValue = (elementId, content) => {
-    const inputBox = document.getElementById(elementId);
-    inputBox.value = content;
 }
 
 export {view}

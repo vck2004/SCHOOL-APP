@@ -3,7 +3,7 @@ import {view} from './view.js';
 import {auth,db} from './index.js';
 import {onAuthStateChanged} from "firebase/auth";
 import {doc,getDoc} from "firebase/firestore";
-import {student,teacher,admin,course} from './OOP.js';
+import {student,teacher,admin} from './OOP.js';
 
 // async function getData(thing, id) {
 //     return (await getDoc(doc(db, thing, id))).data();
@@ -14,6 +14,7 @@ onAuthStateChanged(auth, async (user) => {
         const userDoc = (await getDoc(doc(db,"users",user.uid))).data();
         if(userDoc.title == "student"){
             model.currentUser = new student(user.uid,user.email,userDoc.title,userDoc);
+            model.currentUser.setUserProfile(userDoc);
             view.setActiveScreen("studentPage");
         } else if(userDoc.title == "teacher") {
             model.currentUser = new teacher(user.uid,user.email,userDoc.title,userDoc);
