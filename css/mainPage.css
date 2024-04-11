@@ -42,6 +42,8 @@
     position: sticky;
     top: 0;
     justify-content: flex-end;
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
 }
 
 .main_page_container #main_content {

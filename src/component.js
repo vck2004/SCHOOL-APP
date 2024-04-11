@@ -419,66 +419,8 @@ component.studentProfile = `
             </li>
             </ul>
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="basic_info_tab_pane">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Name</label>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Pho Ngoc Song Khue</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Gender</label>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Female</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>D.O.B</label>
-                    </div>
-                    <div class="col-md-6">
-                        <p>04/06/2004</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Study field</label>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Computer Science</p>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="contact_info_tab_pane">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Email</label>
-                    </div>
-                    <div class="col-md-6">
-                        <p>khuepho@gmail.com</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Phone</label>
-                    </div>
-                    <div class="col-md-6">
-                        <p>123 456 7890</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Address</label>
-                    </div>
-                    <div class="col-md-6">
-                        <p>123 ABC Street Ho Chi Minh City Vietnam</p>
-                    </div>
-                </div>
-            </div>
+            <div class="tab-pane fade show active" id="basic_info_tab_pane"></div>
+            <div class="tab-pane fade" id="contact_info_tab_pane"></div>
         </div>
     </div>
 `

@@ -17,6 +17,19 @@ li {
     display: block;
 }
 
+/* scrollbar setting */
+::-webkit-scrollbar {
+    width: 7px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 25px;
+}
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 25px;
+}
+
 /* system message settings */
 /* container */
 .toast_container {

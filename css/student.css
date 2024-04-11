@@ -46,9 +46,6 @@
 .content_container #contact_info_tab_pane {
     padding: 30px;
 }
-.content_container .row label {
-    font-weight: bold;
-}
 
 @media screen and (max-width: 768px) {
     .profile_container .basic_info_container h1 {
