@@ -1,0 +1,28 @@
+
+@media screen and (max-width: 768px) {
+    .show_class_table thead {
+        display: none;
+    }
+    .show_class_table, .show_class_table tbody, .show_class_table tr, .show_class_table td {
+        display: block;
+        width: 100%;
+    }
+    .show_class_table tr {
+        margin-bottom: 20px;
+    }
+    .show_class_table tbody tr td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: 1px solid #dee2e6;
+    }
+    .show_class_table td::before{
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        text-align: left;
+        font-weight: bold;
+        padding-left: 15px;
+    }
+}

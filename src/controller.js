@@ -2,8 +2,8 @@ import {model} from './model.js';
 import {view} from './view.js';
 import {auth,db} from './index.js';
 import {onAuthStateChanged} from "firebase/auth";
-import {doc,getDoc} from "firebase/firestore";
-import {student,teacher,admin} from './OOP.js';
+import {doc,getDoc,getDocs,collection,query,where} from "firebase/firestore";
+import {student,teacher,admin,courses} from './OOP.js';
 
 // async function getData(thing, id) {
 //     return (await getDoc(doc(db, thing, id))).data();
@@ -12,6 +12,9 @@ import {student,teacher,admin} from './OOP.js';
 onAuthStateChanged(auth, async (user) => {
     if(user) {
         const userDoc = (await getDoc(doc(db,"users",user.uid))).data();
+        const q = query(collection(db,"classes"), where("beginWeek",">",model.currentTime.year+"-W"+model.currentTime.weekNumber));
+        model.courses = new courses(await getDocs(q));
+        model.courses.print();
         if(userDoc.title == "student"){
             model.currentUser = new student(user.uid,user.email,userDoc.title,userDoc);
             model.currentUser.setUserProfile(userDoc);

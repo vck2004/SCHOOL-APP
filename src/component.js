@@ -304,9 +304,9 @@ component.studentPage = `
                     <i class="fa-solid fa-book-open-reader"></i>
                     <span>Score</span>
                 </li>
-                <li class="side_bar_item">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                    <span>Class registration</span>
+                <li class="side_bar_item" id="join_class">
+                    <i class="fa-regular fa-pen-to-square" z></i>
+                    <span>Class Registration</span>
                 </li>
                 <li class="side_bar_item">
                     <i class="fa-solid fa-envelope-open-text"></i>
@@ -424,7 +424,35 @@ component.studentProfile = `
         </div>
     </div>
 `
-component.joinClass = ``
+component.joinClass = `
+    <div class="title">Available Class</div>
+    <div class="content_container">
+        <table class="show_class_table table table-bordered">
+            <thead>
+                <tr>
+                    <th>Class Name</th>
+                    <th>Duration</th>
+                    <th>Class Time</th>
+                    <th>Room</th>
+                    <th>Teacher</th>
+                    <th>Capacity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Class Name">CO2003</td>
+                    <td data-label="Duration">W24-25</td>
+                    <td data-label="Class Time">Wed 13:00-17:00</td>
+                    <td data-label="Room">B2-202</td>
+                    <td data-label="Teacher">Vu Van A</td>
+                    <td data-label="Capacity">0/40</td>
+                    <td><button class="btn btn-primary">Join</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+`
 
 
 component.teacherPage = `
@@ -447,7 +475,7 @@ component.teacherPage = `
                     <i class="fa-solid fa-book-open-reader"></i> 
                     <span>Grading</span>
                 </li>
-                <li class="side_bar_item">
+                <li class="side_bar_item" id="teacher_timetable">
                     <i class="fa-regular fa-pen-to-square"></i>
                     <span>My Schedules</span>
                 </li>
@@ -486,7 +514,6 @@ component.teacherPage = `
         </div>
     </div>
 `
-
 component.teacherProfile = `
 <div class="container-xl px-4 mt-4">
     <div class="row">
@@ -552,5 +579,6 @@ component.teacherProfile = `
     </div>
 </div>
 `
+component.teacherTimetable = ``
 
 export {component}

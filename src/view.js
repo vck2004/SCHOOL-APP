@@ -1,6 +1,7 @@
 import {controller} from './controller.js';
 import {component} from './component.js';
 import { model } from './model.js';
+import { DateTime } from 'luxon';
 
 const view = {}
 
@@ -146,6 +147,9 @@ view.setActiveScreen = (screenName) => {
                     model.updateProfile(data);
                 })
             })
+            document.getElementById('teacher_timetable').addEventListener('click', () => {
+                console.log("timetable here");
+            })
             break;
         case 'studentPage':
             document.getElementById('app').innerHTML = component.studentPage;
@@ -174,6 +178,11 @@ view.setActiveScreen = (screenName) => {
                     }
                     model.updateProfile(data);
                 })
+            })
+            document.getElementById('join_class').addEventListener('click',() => {
+                mainContent.innerHTML = component.joinClass;
+                let t = DateTime.now();
+                console.log(t.year+"-W"+t.weekNumber);
             })
             break;
     }

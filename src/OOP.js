@@ -52,11 +52,15 @@ class admin extends user {
     addStudent(data){controller.registerStudent(data)};
 }
 
-class course {
-    constructor(name,id){
-        this.CourseName = name;
-        this.id = id;
+class courses {
+    constructor(data){
+        this.futureCourses = data;
+    }
+    print(){
+        this.futureCourses.forEach((doc) => {
+            console.log(doc.data());
+        })
     }
 }
 
-export {user,student,teacher,admin,course}
+export {user,student,teacher,admin,courses}

@@ -2,18 +2,16 @@ import {auth,db,secondAuth} from './index.js';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut} from 'firebase/auth';
 import {doc, updateDoc, getDoc, setDoc,query,collection,where,getDocs, addDoc, arrayUnion} from 'firebase/firestore';
 import { view } from './view.js';
+import { DateTime } from 'luxon';
 
 const model = {}
 
 model.currentUser = undefined;
+model.courses = undefined;
+model.currentTime = DateTime.now().minus({week: 1});
 
 model.login = (data) => {
     signInWithEmailAndPassword(auth, data.email, data.password)
-    .then((userCredential) => {
-        console.log(userCredential);
-        const user = userCredential.user;
-        console.log(user);
-    })
     .catch((error) => {
         view.alertError('.login_btn',error.message);
     });
