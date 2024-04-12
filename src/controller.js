@@ -18,6 +18,7 @@ onAuthStateChanged(auth, async (user) => {
             view.setActiveScreen("studentPage");
         } else if(userDoc.title == "teacher") {
             model.currentUser = new teacher(user.uid,user.email,userDoc.title,userDoc);
+            model.currentUser.setUserProfile(userDoc);
             view.setActiveScreen("teacherPage");
         } else if(userDoc.title == "admin") {
             model.currentUser = new admin(user.uid,user.email,userDoc.title);

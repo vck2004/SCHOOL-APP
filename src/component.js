@@ -488,32 +488,69 @@ component.teacherPage = `
 `
 
 component.teacherProfile = `
-    <div class="title">Student Profile</div>
-    <div class="content_container">
-        <form id="user_info_form">
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col">
-                        <label for="last_name" class="form-label">Last name</label>
-                        <input id="last_name" type="text" class="form-control" placeholder="Nguyen Van" autocomplete="off">
-                    </div>
-                    <div class="col">
-                        <label for="first_name" class="form-label">First name</label>
-                        <input id="first_name" type="text" class="form-control" placeholder="A" autocomplete="off">
-                    </div>
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <img class="teacher_avatar" src="../img/default_avatar.jpg">
+                    <!-- <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <button class="btn btn-primary" type="button">Upload new image</button> -->
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="phone_number" class="form-label">Phone number</label>
-                <input id="phone_number" type="text" class="form-control" placeholder="0123456789" autocomplete="off">
+        </div>
+        <div class="col-xl-8">
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form id="user_info_form">
+                        <div class="mb-3">
+                            <label class="small mb-1" for="name">Teacher name</label>
+                            <input class="form-control" id="name" type="text" disabled>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="email">Email address</label>
+                                <input class="form-control" id="email" type="email" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="profession">Profession</label>
+                                <input class="form-control" id="profession" type="text" disabled>
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="phone_number">Phone number</label>
+                                <input class="form-control" id="phone_number" type="tel" placeholder="Enter your phone number" autocomplete="off">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="DOB">Date of birth</label>
+                                <input class="form-control" id="DOB" type="date" name="birthday">
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="gender">Gender</label>
+                                <select id="gender" class="form-select">
+                                    <option value="..." selected>...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="address">Address</label>
+                                <input class="form-control" id="address" type="text" placeholder="Enter your address" autocomplete="off">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="DOB" class="form-label">Date of birth</label>
-                <input id="DOB" type="date" class="form-control" autocomplete="off">
-            </div>
-            <button class="btn btn-primary">Save change</button>
-        </form>
+        </div>
     </div>
+</div>
 `
 
 export {component}

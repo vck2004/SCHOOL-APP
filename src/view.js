@@ -130,17 +130,20 @@ view.setActiveScreen = (screenName) => {
             });
             document.getElementById('profile_button').addEventListener('click', () => {
                 mainContent.innerHTML = component.teacherProfile;
+                view.setTeacherInfo();
                 const userProfileForm = document.getElementById('user_info_form');
-                model.getTeacherProfile();
+                userProfileForm.email.value = model.currentUser.email;
+                userProfileForm.name.value = model.currentUser.name;
+                userProfileForm.profession.value = model.currentUser.profession;
                 userProfileForm.addEventListener('submit',(e) => {
                     e.preventDefault();
                     const data = {
-                        first: userProfileForm.first_name.value,
-                        last: userProfileForm.last_name.value,
-                        phone: userProfileForm.phone_number.value,
-                        DOB: userProfileForm.DOB.value,
+                        phoneNumber: userProfileForm.phone_number.value,
+                        dateOfBirth: userProfileForm.DOB.value,
+                        address: userProfileForm.address.value,
+                        gender: userProfileForm.gender.value,
                     }
-                    model.updateTeacherProfile(data);
+                    model.updateProfile(data);
                 })
             })
             break;
@@ -215,6 +218,13 @@ view.setStudentInfo = () => {
         <div class="col-md-6 fw-bold">Address</div>
         <div class="col-md-6">${model.currentUser.address}</div>
     </div>`
+}
+view.setTeacherInfo = () => {
+    const userProfileForm = document.getElementById('user_info_form');
+    userProfileForm.phone_number.value = model.currentUser.phoneNumber;
+    userProfileForm.DOB.value = model.currentUser.dateOfBirth;
+    userProfileForm.address.value = model.currentUser.address;
+    userProfileForm.gender.value = model.currentUser.gender;
 }
 
 view.clearInput = () => {

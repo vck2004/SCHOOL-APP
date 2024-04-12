@@ -36,6 +36,12 @@ class teacher extends user {
         this.profession = data.profession;
         this.name = data.name;
     }
+    setUserProfile(data){
+        this.phoneNumber = data.phoneNumber? data.phoneNumber : "";
+        this.dateOfBirth = data.dateOfBirth? data.dateOfBirth : "";
+        this.address = data.address? data.address : "";
+        this.gender = data.gender? data.gender : "...";
+    }
     getTimeTable(){}
 }
 

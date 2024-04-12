@@ -130,8 +130,13 @@ model.updateProfile = async (data) => {
     try {
         await updateDoc(doc(db,'users',model.currentUser.uid),data);
         model.currentUser.setUserProfile(data);
-        view.setStudentInfo();
-        view.alertSuccess('.modal-footer button:nth-child(2)','Update successfully');
+        if(model.currentUser.title === "student") {
+            view.setStudentInfo();
+            view.alertSuccess('.modal-footer button:nth-child(2)','Update successfully');
+        } else if(model.currentUser.title === "teacher") {
+            view.setTeacherInfo();
+            view.alertSuccess('#user_info_form button','Update successfully');
+        }
     } catch (error) {
         view.alertError('.modal-footer button:nth-child(2)','Something went wrong, please try again');
     }
