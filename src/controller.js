@@ -12,11 +12,10 @@ import {student,teacher,admin,courses} from './OOP.js';
 onAuthStateChanged(auth, async (user) => {
     if(user) {
         const userDoc = (await getDoc(doc(db,"users",user.uid))).data();
-        const q = query(collection(db,"classes"), where("beginWeek",">",model.currentTime.year+"-W"+model.currentTime.weekNumber));
-        model.courses = new courses(await getDocs(q));
-        model.courses.print();
         if(userDoc.title == "student"){
             model.currentUser = new student(user.uid,user.email,userDoc.title,userDoc);
+            const q = query(collection(db,"classes"), where("beginWeek",">",model.currentTime.year+"-W"+model.currentTime.weekNumber));
+            model.courses = new courses(await getDocs(q));
             model.currentUser.setUserProfile(userDoc);
             view.setActiveScreen("studentPage");
         } else if(userDoc.title == "teacher") {

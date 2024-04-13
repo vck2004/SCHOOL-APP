@@ -5,6 +5,8 @@ import { DateTime } from 'luxon';
 
 const view = {}
 
+view.weekName = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+
 view.setActiveScreen = (screenName) => {
     let mainContent;
     switch (screenName) {
@@ -181,8 +183,7 @@ view.setActiveScreen = (screenName) => {
             })
             document.getElementById('join_class').addEventListener('click',() => {
                 mainContent.innerHTML = component.joinClass;
-                let t = DateTime.now();
-                console.log(t.year+"-W"+t.weekNumber);
+                view.setClassTableInfo();
             })
             break;
     }
@@ -234,6 +235,40 @@ view.setTeacherInfo = () => {
     userProfileForm.DOB.value = model.currentUser.dateOfBirth;
     userProfileForm.address.value = model.currentUser.address;
     userProfileForm.gender.value = model.currentUser.gender;
+}
+
+view.setClassTableInfo = () => {
+    let classTable = document.querySelector('.show_class_table tbody');
+    classTable.innerHTML = "";
+    model.courses.futureCourses.forEach((info) => {
+        let tableRow = document.createElement('tr');
+        tableRow.innerHTML = `
+            <td data-label="Class Name">${info.name}</td>
+            <td data-label="Subject">${info.subject}</td>
+            <td data-label="Duration">${info.beginWeek.substr(5,3)} - ${info.endWeek.substr(5,3)}</td>
+            <td data-label="Class Time">${view.weekName[info.dayOfWeek]} ${info.beginTime} - ${info.endTime}</td>
+            <td data-label="Room">${info.room}</td>
+            <td data-label="Teacher">${info.teacherName}</td>
+            <td data-label="Capacity">${info.studentList.length}/${info.studentCap}</td>
+            <td>
+                ${info.studentList.includes(model.currentUser.uid)? 
+                    "<button class=\"btn btn-primary disabled\">Join</button><button class=\"btn btn-danger\">Leave</button>" : 
+                    "<button class=\"btn btn-primary\">Join</button><button class=\"btn btn-danger disabled\">Leave</button>"}
+            </td>
+        `
+        tableRow.addEventListener("click",(e) => {
+            console.log(e.target);
+            if(e.target.classList.contains("btn-primary")){
+                e.target.classList.add("disabled");
+                model.currentUser.joinClass(info.classID);
+            }
+            if(e.target.classList.contains("btn-danger")){
+                e.target.classList.add("disabled");
+                model.currentUser.leaveClass(info.classID);
+            }
+        })
+        classTable.appendChild(tableRow);
+    })
 }
 
 view.clearInput = () => {

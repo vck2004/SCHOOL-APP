@@ -20,6 +20,7 @@ class student extends user {
     constructor (uid,email,title,data){
         super(uid,email,title);
         this.name = data.name;
+        this.timetable = data.timetable;
     }
     setUserProfile(data){
         this.phoneNumber = data.phoneNumber? data.phoneNumber : "";
@@ -28,6 +29,11 @@ class student extends user {
         this.gender = data.gender? data.gender : "...";
         this.studyField = data.studyField? data.studyField : "";
     }
+    joinClass(classID) {model.updateClass(classID,"add")};
+    leaveClass(classID) {model.updateClass(classID,"rem")};
+    getTimeTable(data){
+        this.timetable = data.timetable;
+    }
 }
 
 class teacher extends user {
@@ -35,6 +41,7 @@ class teacher extends user {
         super(uid,email,title);
         this.profession = data.profession;
         this.name = data.name;
+        this.timetable = data.timetable;
     }
     setUserProfile(data){
         this.phoneNumber = data.phoneNumber? data.phoneNumber : "";
@@ -42,7 +49,6 @@ class teacher extends user {
         this.address = data.address? data.address : "";
         this.gender = data.gender? data.gender : "...";
     }
-    getTimeTable(){}
 }
 
 class admin extends user {
@@ -54,11 +60,19 @@ class admin extends user {
 
 class courses {
     constructor(data){
-        this.futureCourses = data;
+        this.futureCourses = [];
+        data.forEach((doc) => {
+            let obj = doc.data();
+            obj.classID = doc.id;
+            this.futureCourses.push(obj);
+        })
     }
-    print(){
-        this.futureCourses.forEach((doc) => {
-            console.log(doc.data());
+    getCourses(data) {
+        this.futureCourses = [];
+        data.forEach((doc) => {
+            let obj = doc.data();
+            obj.classID = doc.id;
+            this.futureCourses.push(obj);
         })
     }
 }

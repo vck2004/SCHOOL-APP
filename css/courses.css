@@ -1,3 +1,6 @@
+.show_class_table button {
+    margin: 0 3px;
+}
 
 @media screen and (max-width: 768px) {
     .show_class_table thead {

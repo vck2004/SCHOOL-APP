@@ -431,6 +431,7 @@ component.joinClass = `
             <thead>
                 <tr>
                     <th>Class Name</th>
+                    <th>Subject</th>
                     <th>Duration</th>
                     <th>Class Time</th>
                     <th>Room</th>
@@ -439,17 +440,7 @@ component.joinClass = `
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td data-label="Class Name">CO2003</td>
-                    <td data-label="Duration">W24-25</td>
-                    <td data-label="Class Time">Wed 13:00-17:00</td>
-                    <td data-label="Room">B2-202</td>
-                    <td data-label="Teacher">Vu Van A</td>
-                    <td data-label="Capacity">0/40</td>
-                    <td><button class="btn btn-primary">Join</button></td>
-                </tr>
-            </tbody>
+            <tbody></tbody>
         </table>
     </div>
 `

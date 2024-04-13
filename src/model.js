@@ -1,6 +1,6 @@
 import {auth,db,secondAuth} from './index.js';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut} from 'firebase/auth';
-import {doc, updateDoc, getDoc, setDoc,query,collection,where,getDocs, addDoc, arrayUnion} from 'firebase/firestore';
+import {doc, updateDoc, getDoc, setDoc,query,collection,where,getDocs, addDoc, arrayUnion, arrayRemove} from 'firebase/firestore';
 import { view } from './view.js';
 import { DateTime } from 'luxon';
 
@@ -28,6 +28,7 @@ model.registerStudent = async (data) => {
             email: user.email,
             title: "student",
             timetable: [],
+            joinedClass: [],
         },{merge: true})
         await signOut(secondAuth);
         view.clearInput();
@@ -47,6 +48,7 @@ model.registerTeacher = async (data) => {
             profession: data.profession,
             title: "teacher",
             timetable: [],
+            classIncharge: [],
         },{merge: true})
         await signOut(secondAuth);
         view.clearInput();
@@ -137,6 +139,60 @@ model.updateProfile = async (data) => {
         }
     } catch (error) {
         view.alertError('.modal-footer button:nth-child(2)','Something went wrong, please try again');
+    }
+}
+model.updateClass = async (classID,action) => {
+    try {
+        if(action == "add") {
+            const data = (await getDoc(doc(db,"classes",classID))).data();
+            let conflicted = model.currentUser.timetable.filter((d) => {
+                return (!(d.endWeek <= data.beginWeek || d.beginWeek >= data.endWeek) && d.weekday == data.dayOfWeek && !(d.endTime <= data.beginTime || d.beginTime >= data.endTime));
+            })
+            let full = (data.studentList.length >= 40);
+            if(conflicted.length > 0){
+                throw {message: "You are busy at that time!"};
+            } else if (full){
+                throw {message: "The classes are full!"};
+            } else {
+                await updateDoc(doc(db,"classes",classID),{
+                    studentList: arrayUnion(model.currentUser.uid)
+                })
+                await updateDoc(doc(db,"users",model.currentUser.uid),{
+                    joinedClass: arrayUnion(classID),
+                    timetable: arrayUnion({
+                        classID: classID,
+                        startWeek: data.beginWeek,
+                        endWeek: data.endWeek,
+                        weekday: data.dayOfWeek,
+                        beginTime: data.beginTime,
+                        endTime: data.endTime,
+                    })
+                })
+            }
+        } else if(action == "rem") {
+            const data = (await getDoc(doc(db,"classes",classID))).data();
+            await updateDoc(doc(db,"classes",classID),{
+                studentList: arrayRemove(model.currentUser.uid)
+            })
+            await updateDoc(doc(db,"users",model.currentUser.uid),{
+                joinedClass: arrayRemove(classID),
+                timetable: arrayRemove({
+                    classID: classID,
+                    startWeek: data.beginWeek,
+                    endWeek: data.endWeek,
+                    weekday: data.dayOfWeek,
+                    beginTime: data.beginTime,
+                    endTime: data.endTime,
+                })
+            })
+        }
+        const q = query(collection(db,"classes"), where("beginWeek",">",model.currentTime.year+"-W"+model.currentTime.weekNumber));
+        model.courses.getCourses(await getDocs(q));
+        model.currentUser.getTimeTable((await getDoc(doc(db,"users",model.currentUser.uid))).data());
+        view.setClassTableInfo();
+        view.alertSuccess("#f","Success");
+    } catch (error) {
+        view.alertError("#f",error.message);
     }
 }
 
