@@ -53,49 +53,27 @@
                 <button id="side_bar_btn" class="btn btn-primary" style="margin: 0 10px;">Log out</button>
             </div>
             <div id="main_content">
-                <div class="title">Available Class</div>
-                <div class="content_container">
-                    <table class="show_class_table table table-bordered">
+                <div class="title">My schedules</div>
+                <div class="content_container table-responsive-lg">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><button class="page-link"><i class="fa-solid fa-chevron-left"></i></button></li>
+                        <li class="page-item"><input type="week" class="page-link"></li>
+                        <li class="page-item"><button class="page-link"><i class="fa-solid fa-chevron-right"></i></button></li>
+                    </ul>
+                    <table class="schedules table table-bordered">
                         <thead>
                             <tr>
-                                <th>Class Name</th>
-                                <th>Duration</th>
-                                <th>Class Time</th>
-                                <th>Room</th>
-                                <th>Teacher</th>
-                                <th>Capacity</th>
-                                <th>Action</th>
+                                <th>Time</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                                <th>Sun</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td data-label="Class Name">CO2003</td>
-                                <td data-label="Duration">W24-25</td>
-                                <td data-label="Class Time">Wed 13:00-17:00</td>
-                                <td data-label="Room">B2-202</td>
-                                <td data-label="Teacher">Vu Van A</td>
-                                <td data-label="Capacity">0/40</td>
-                                <td><button class="btn btn-primary">Join</button></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Class Name">CO2003</td>
-                                <td data-label="Duration">W24-25</td>
-                                <td data-label="Class Time">Wed 13:00-17:00</td>
-                                <td data-label="Room">B2-202</td>
-                                <td data-label="Teacher">Vu Van A</td>
-                                <td data-label="Capacity">0/40</td>
-                                <td><button class="btn btn-primary">Join</button></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Class Name">CO2003</td>
-                                <td data-label="Duration">W24-25</td>
-                                <td data-label="Class Time">Wed 13:00-17:00</td>
-                                <td data-label="Room">B2-202</td>
-                                <td data-label="Teacher">Vu Van A</td>
-                                <td data-label="Capacity">0/40</td>
-                                <td><button class="btn btn-primary">Join</button></td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>

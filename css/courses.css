@@ -1,8 +1,38 @@
+/* timetable */
+.schedules td {
+    position: relative;
+    min-width: 116px;
+}
+.schedules .card {
+    overflow: hidden;
+    cursor: pointer;
+}
+.schedules .card:hover {
+    position: absolute;
+    background-color: #084298;
+    z-index: 999;
+    width: 86%;
+    height: auto !important;
+}
+.schedules .card-body:hover {
+    background-color: #084298;
+}
+
+/* course table */
 .show_class_table button {
     margin: 0 3px;
 }
 
 @media screen and (max-width: 768px) {
+    .schedules tbody tr {
+        position: relative;
+    }
+    .schedules tbody th {
+        position: sticky;
+        left: 0;
+        z-index: 9999;
+    }
+
     .show_class_table thead {
         display: none;
     }

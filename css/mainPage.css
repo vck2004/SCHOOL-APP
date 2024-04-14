@@ -43,6 +43,10 @@
     top: 0;
     justify-content: flex-end;
 }
+.main_page_container .navbar #system_time{
+    color: white;
+    margin-right: 10px;
+}
 
 .main_page_container #main_content {
     padding: 30px;

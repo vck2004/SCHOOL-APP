@@ -4,11 +4,13 @@ import {doc, updateDoc, getDoc, setDoc,query,collection,where,getDocs, addDoc, a
 import { view } from './view.js';
 import { DateTime } from 'luxon';
 
+//improve the student register to be more computer side
+
 const model = {}
 
 model.currentUser = undefined;
 model.courses = undefined;
-model.currentTime = DateTime.now().minus({week: 1});
+model.currentTime = DateTime.now();
 
 model.login = (data) => {
     signInWithEmailAndPassword(auth, data.email, data.password)
@@ -99,7 +101,9 @@ model.addClass = async (data) => {
                 classIncharge: arrayUnion(courseRef.id),
                 timetable: arrayUnion({
                     classID: courseRef.id,
-                    startWeek: data.beginWeek,
+                    subject: data.subject,
+                    room: data.room,
+                    beginWeek: data.beginWeek,
                     endWeek: data.endWeek,
                     weekday: data.dayOfWeek,
                     beginTime: data.beginTime,
@@ -109,17 +113,6 @@ model.addClass = async (data) => {
         }
         view.clearInput();
         view.alertSuccess("#f","Class created successfully!");
-        // teacherTime.sort((a,b) => {
-        //     if(a.startWeek != b.startWeek){
-        //         return a.startWeek > b.startWeek? 1 : -1;
-        //     } else if (a.weekday != b.weekday){
-        //         return a.weekday - b.weekday;
-        //     } else if(a.beginTime != b.beginTime){
-        //         return a.beginTime > b.beginTime? 1 : -1;
-        //     } else {
-        //         return 0;
-        //     }
-        // })
     } catch (error) {
         view.alertError("#f",error.message);
     }
@@ -161,7 +154,9 @@ model.updateClass = async (classID,action) => {
                     joinedClass: arrayUnion(classID),
                     timetable: arrayUnion({
                         classID: classID,
-                        startWeek: data.beginWeek,
+                        subject: data.subject,
+                        room: data.room,
+                        beginWeek: data.beginWeek,
                         endWeek: data.endWeek,
                         weekday: data.dayOfWeek,
                         beginTime: data.beginTime,
@@ -178,7 +173,9 @@ model.updateClass = async (classID,action) => {
                 joinedClass: arrayRemove(classID),
                 timetable: arrayRemove({
                     classID: classID,
-                    startWeek: data.beginWeek,
+                    subject: data.subject,
+                    room: data.room,
+                    beginWeek: data.beginWeek,
                     endWeek: data.endWeek,
                     weekday: data.dayOfWeek,
                     beginTime: data.beginTime,

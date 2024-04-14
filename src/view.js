@@ -1,7 +1,7 @@
 import {controller} from './controller.js';
 import {component} from './component.js';
 import { model } from './model.js';
-import { DateTime } from 'luxon';
+import { DateTime, Interval } from 'luxon';
 
 const view = {}
 
@@ -24,6 +24,7 @@ view.setActiveScreen = (screenName) => {
             break;
         case 'adminPage':
             document.getElementById('app').innerHTML = component.adminPage;
+            document.getElementById('system_time').innerHTML = `Week: ${model.currentTime.weekNumber}-${model.currentTime.weekYear}`;
             mainContent = document.getElementById('main_content');
             document.getElementById('side_bar_button').addEventListener('click',() => {
                 document.getElementById('side_bar').classList.toggle('expand');
@@ -124,6 +125,7 @@ view.setActiveScreen = (screenName) => {
             break;
         case 'teacherPage':
             document.getElementById('app').innerHTML = component.teacherPage;
+            document.getElementById('system_time').innerHTML = `Week: ${model.currentTime.weekNumber}-${model.currentTime.weekYear}`;
             mainContent = document.getElementById('main_content');
             document.getElementById('side_bar_button').addEventListener('click',() => {
                 document.getElementById('side_bar').classList.toggle('expand');
@@ -150,11 +152,41 @@ view.setActiveScreen = (screenName) => {
                 })
             })
             document.getElementById('teacher_timetable').addEventListener('click', () => {
-                console.log("timetable here");
+                mainContent.innerHTML = component.timetable;
+                let weekInp = document.getElementById('timetable_week');
+                let targetWeek = model.currentTime;
+                document.getElementById('increase_week').addEventListener('click',() => {
+                    targetWeek = targetWeek.plus({week: 1});
+                    weekInp.value = targetWeek.toISOWeekDate().substring(0,8);
+                    view.setTimetable(targetWeek);
+                })
+                document.getElementById('decrease_week').addEventListener('click',() => {
+                    targetWeek = targetWeek.minus({week: 1});
+                    weekInp.value = targetWeek.toISOWeekDate().substring(0,8);
+                    view.setTimetable(targetWeek);
+                })
+                weekInp.addEventListener("blur",() => {
+                    targetWeek = DateTime.fromISO(weekInp.value);
+                    view.setTimetable(targetWeek);
+                })
+                weekInp.value = targetWeek.toISOWeekDate().substring(0,8);
+                model.currentUser.timetable.sort((a,b) => {
+                    if(a.beginWeek != b.beginWeek){
+                        return a.beginWeek > b.beginWeek? 1 : -1;
+                    } else if (a.weekday != b.weekday){
+                        return a.weekday - b.weekday;
+                    } else if(a.beginTime != b.beginTime){
+                        return a.beginTime > b.beginTime? 1 : -1;
+                    } else {
+                        return 0;
+                    }
+                })
+                view.setTimetable(targetWeek);
             })
             break;
         case 'studentPage':
             document.getElementById('app').innerHTML = component.studentPage;
+            document.getElementById('system_time').innerHTML = `Week: ${model.currentTime.weekNumber}-${model.currentTime.weekYear}`;
             mainContent = document.getElementById('main_content');
             document.getElementById('side_bar_button').addEventListener('click',() => {
                 document.getElementById('side_bar').classList.toggle('expand');
@@ -184,6 +216,38 @@ view.setActiveScreen = (screenName) => {
             document.getElementById('join_class').addEventListener('click',() => {
                 mainContent.innerHTML = component.joinClass;
                 view.setClassTableInfo();
+            })
+            document.getElementById('student_timetable').addEventListener('click',() => {
+                mainContent.innerHTML = component.timetable;
+                let weekInp = document.getElementById('timetable_week');
+                let targetWeek = model.currentTime;
+                document.getElementById('increase_week').addEventListener('click',() => {
+                    targetWeek = targetWeek.plus({week: 1});
+                    weekInp.value = targetWeek.toISOWeekDate().substring(0,8);
+                    view.setTimetable(targetWeek);
+                })
+                document.getElementById('decrease_week').addEventListener('click',() => {
+                    targetWeek = targetWeek.minus({week: 1});
+                    weekInp.value = targetWeek.toISOWeekDate().substring(0,8);
+                    view.setTimetable(targetWeek);
+                })
+                weekInp.addEventListener("blur",() => {
+                    targetWeek = DateTime.fromISO(weekInp.value);
+                    view.setTimetable(targetWeek);
+                })
+                weekInp.value = targetWeek.toISOWeekDate().substring(0,8);
+                model.currentUser.timetable.sort((a,b) => {
+                    if(a.beginWeek != b.beginWeek){
+                        return a.beginWeek > b.beginWeek? 1 : -1;
+                    } else if (a.weekday != b.weekday){
+                        return a.weekday - b.weekday;
+                    } else if(a.beginTime != b.beginTime){
+                        return a.beginTime > b.beginTime? 1 : -1;
+                    } else {
+                        return 0;
+                    }
+                })
+                view.setTimetable(targetWeek);
             })
             break;
     }
@@ -236,7 +300,6 @@ view.setTeacherInfo = () => {
     userProfileForm.address.value = model.currentUser.address;
     userProfileForm.gender.value = model.currentUser.gender;
 }
-
 view.setClassTableInfo = () => {
     let classTable = document.querySelector('.show_class_table tbody');
     classTable.innerHTML = "";
@@ -245,7 +308,7 @@ view.setClassTableInfo = () => {
         tableRow.innerHTML = `
             <td data-label="Class Name">${info.name}</td>
             <td data-label="Subject">${info.subject}</td>
-            <td data-label="Duration">${info.beginWeek.substr(5,3)} - ${info.endWeek.substr(5,3)}</td>
+            <td data-label="Duration">${info.beginWeek.substring(5,8)} - ${info.endWeek.substring(5,8)}</td>
             <td data-label="Class Time">${view.weekName[info.dayOfWeek]} ${info.beginTime} - ${info.endTime}</td>
             <td data-label="Room">${info.room}</td>
             <td data-label="Teacher">${info.teacherName}</td>
@@ -257,7 +320,6 @@ view.setClassTableInfo = () => {
             </td>
         `
         tableRow.addEventListener("click",(e) => {
-            console.log(e.target);
             if(e.target.classList.contains("btn-primary")){
                 e.target.classList.add("disabled");
                 model.currentUser.joinClass(info.classID);
@@ -270,6 +332,48 @@ view.setClassTableInfo = () => {
         classTable.appendChild(tableRow);
     })
 }
+view.setTimetable = (targetWeek) => {
+    let ISOtargetWeek = targetWeek.toISOWeekDate().substring(0,8)
+    let schedulesTable = document.querySelector('.schedules tbody');
+    schedulesTable.innerHTML = "";
+    for(let i = 7;i<18;i++){
+        let row = document.createElement("tr");
+        row.innerHTML = `
+            <th>${i}:00</th>
+            <td class="0"></td>
+            <td class="1"></td>
+            <td class="2"></td>
+            <td class="3"></td>
+            <td class="4"></td>
+            <td class="5"></td>
+            <td class="6"></td>
+        `
+        schedulesTable.appendChild(row);
+    }
+    for(let classInfo of model.currentUser.timetable) {
+        if(classInfo.beginWeek <= ISOtargetWeek && classInfo.endWeek >= ISOtargetWeek){
+            const start = model.currentTime.startOf('day').plus({hours: 7});
+            const end = model.currentTime.endOf('day').minus({hours: 6});
+            let cells = [];
+            for(let period = start;period <= end;period = period.plus({hour: 1})){
+                if(classInfo.beginTime <= period.toFormat('T') && period.toFormat('T') <= classInfo.endTime) {
+                    for(let cell of schedulesTable.children[period.hour-7].children){
+                        if(cell.classList[0] == classInfo.weekday) cells.push(cell);
+                    }
+                }
+            }
+            cells[0].innerHTML = `
+            <div class = "card text-bg-primary" style="height: ${cells.length*42.9}px">
+                <div class = "card-body">${classInfo.subject}<br>Room ${classInfo.room}</div>
+            </div>`;
+            cells[0].setAttribute("rowspan",`${cells.length}`);
+            for(let cell of cells){
+                if(cell.innerHTML == "") cell.remove();
+            }
+        }
+    }
+}
+
 
 view.clearInput = () => {
     let inputBoxes = document.querySelectorAll('input');
@@ -339,13 +443,12 @@ view.addOptions = (array) => {
     array.forEach((data) => {
         let li = document.createElement("li");
         li.id = data.UID;
-        li.classList.add(data.profession);
         li.innerHTML = `${data.profession} - ${data.name}`;
         li.addEventListener("click",(e) => {
             wrapper.classList.remove("active");
             selectBtn.id = e.target.id;
             selectBtn.firstElementChild.value = e.target.innerText.split(" - ")[1];
-            sub.value = e.target.classList[0];
+            sub.value = e.target.innerText.split(" - ")[0];
         })
         opt.appendChild(li);
     })

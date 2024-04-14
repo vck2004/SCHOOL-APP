@@ -69,6 +69,7 @@ component.adminPage = `
         </aside>
         <div class="content_container container-fluid" style="padding-left: 0;padding-right: 0;">
             <div class="navbar">
+                <div id="system_time"></div>
                 <img src="../img/default_avatar.jpg" alt="avatar" class="avatar" draggable="false">
                 <button id="log_out_btn" class="btn btn-primary" style="margin: 0 10px;">Log out</button>
             </div>
@@ -296,6 +297,10 @@ component.studentPage = `
                     <i class="fa-regular fa-user"></i>
                     <span>Profile</span>
                 </li>
+                <li class="side_bar_item" id="student_timetable">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>My Time Table</span>
+                </li>
                 <li class="side_bar_item">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>Class Info</span>
@@ -316,6 +321,7 @@ component.studentPage = `
         </aside>
         <div class="content_container container-fluid" style="padding-left: 0;padding-right: 0;">
             <div class="navbar">
+                <div id="system_time"></div>
                 <img src="../img/default_avatar.jpg" alt="avatar" class="avatar" draggable="false">
                 <button id="log_out_btn" class="btn btn-primary" style="margin: 0 10px;">Log out</button>
             </div>
@@ -444,7 +450,31 @@ component.joinClass = `
         </table>
     </div>
 `
-
+component.timetable = `
+    <div class="title">My schedules</div>
+    <div class="content_container table-responsive-lg">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><button class="page-link" id="decrease_week"><i class="fa-solid fa-chevron-left"></i></button></li>
+            <li class="page-item"><input type="week" class="page-link" id="timetable_week"></li>
+            <li class="page-item"><button class="page-link" id="increase_week"><i class="fa-solid fa-chevron-right"></i></button></li>
+        </ul>
+        <table class="schedules table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th class="col-1">Time</th>
+                    <th class="col-1">Mon</th>
+                    <th class="col-1">Tue</th>
+                    <th class="col-1">Wed</th>
+                    <th class="col-1">Thu</th>
+                    <th class="col-1">Fri</th>
+                    <th class="col-1">Sat</th>
+                    <th class="col-1">Sun</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+`
 
 component.teacherPage = `
     <div class="main_page_container">
@@ -467,7 +497,7 @@ component.teacherPage = `
                     <span>Grading</span>
                 </li>
                 <li class="side_bar_item" id="teacher_timetable">
-                    <i class="fa-regular fa-pen-to-square"></i>
+                    <i class="fa-regular fa-calendar"></i>
                     <span>My Schedules</span>
                 </li>
                 <li class="side_bar_item">
@@ -478,6 +508,7 @@ component.teacherPage = `
         </aside>
         <div class="content_container container-fluid" style="padding-left: 0;padding-right: 0;">
             <div class="navbar">
+                <div id="system_time"></div>
                 <img src="../img/default_avatar.jpg" alt="avatar" class="avatar" draggable="false">
                 <button id="log_out_btn" class="btn btn-primary" style="margin: 0 10px;">Log out</button>
             </div>
