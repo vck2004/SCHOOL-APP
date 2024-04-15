@@ -2,22 +2,21 @@ import {model} from './model.js';
 import {view} from './view.js';
 import {auth,db} from './index.js';
 import {onAuthStateChanged} from "firebase/auth";
-import {doc,getDoc} from "firebase/firestore";
-import {student,teacher,admin} from './OOP.js';
-
-// async function getData(thing, id) {
-//     return (await getDoc(doc(db, thing, id))).data();
-// }
+import {doc,getDoc,getDocs,collection,query,where} from "firebase/firestore";
+import {student,teacher,admin,courses} from './OOP.js';
 
 onAuthStateChanged(auth, async (user) => {
     if(user) {
         const userDoc = (await getDoc(doc(db,"users",user.uid))).data();
         if(userDoc.title == "student"){
             model.currentUser = new student(user.uid,user.email,userDoc.title,userDoc);
+            const q = query(collection(db,"classes"), where("beginWeek",">",model.currentTime.year+"-W"+model.currentTime.weekNumber));
+            model.courses = new courses(await getDocs(q));
             model.currentUser.setUserProfile(userDoc);
             view.setActiveScreen("studentPage");
         } else if(userDoc.title == "teacher") {
             model.currentUser = new teacher(user.uid,user.email,userDoc.title,userDoc);
+            model.currentUser.setUserProfile(userDoc);
             view.setActiveScreen("teacherPage");
         } else if(userDoc.title == "admin") {
             model.currentUser = new admin(user.uid,user.email,userDoc.title);
@@ -71,6 +70,23 @@ controller.addClass = (data) => {
     if (data.name !== '' && data.room !== '' && data.teacherName !== '' && data.beginWeek !== '' && data.endWeek !== '' && data.beginTime !== '' && data.endTime !== '' && data.dayOfWeek !== '' && data.beginTime < data.endTime && data.beginWeek < data.endWeek) {
         model.addClass(data);
     }
+}
+
+controller.loadClass = (data) => {
+    if(data.name !== 'Choose a class') {
+        model.getClass(data);
+    }
+}
+controller.saveScore = (data,classID) => {
+    for(let obj of data){
+        for(let i=0;i<4;i++){
+            if(obj.studentGrade[i] > 10 || obj.studentGrade[i] < 0){
+                view.alertError("#save_score","There are invalid score");
+                return;
+            }
+        }
+    }
+    model.uploadScore(data,classID);
 }
 
 export {controller}

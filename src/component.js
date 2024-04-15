@@ -69,6 +69,7 @@ component.adminPage = `
         </aside>
         <div class="content_container container-fluid" style="padding-left: 0;padding-right: 0;">
             <div class="navbar">
+                <div id="system_time"></div>
                 <img src="../img/default_avatar.jpg" alt="avatar" class="avatar" draggable="false">
                 <button id="log_out_btn" class="btn btn-primary" style="margin: 0 10px;">Log out</button>
             </div>
@@ -296,17 +297,21 @@ component.studentPage = `
                     <i class="fa-regular fa-user"></i>
                     <span>Profile</span>
                 </li>
+                <li class="side_bar_item" id="student_timetable">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>My Time Table</span>
+                </li>
                 <li class="side_bar_item">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>Class Info</span>
                 </li>
-                <li class="side_bar_item">
+                <li class="side_bar_item" id="student_score_page">
                     <i class="fa-solid fa-book-open-reader"></i>
                     <span>Score</span>
                 </li>
-                <li class="side_bar_item">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                    <span>Class registration</span>
+                <li class="side_bar_item" id="join_class">
+                    <i class="fa-regular fa-pen-to-square" z></i>
+                    <span>Class Registration</span>
                 </li>
                 <li class="side_bar_item">
                     <i class="fa-solid fa-envelope-open-text"></i>
@@ -316,6 +321,7 @@ component.studentPage = `
         </aside>
         <div class="content_container container-fluid" style="padding-left: 0;padding-right: 0;">
             <div class="navbar">
+                <div id="system_time"></div>
                 <img src="../img/default_avatar.jpg" alt="avatar" class="avatar" draggable="false">
                 <button id="log_out_btn" class="btn btn-primary" style="margin: 0 10px;">Log out</button>
             </div>
@@ -424,8 +430,71 @@ component.studentProfile = `
         </div>
     </div>
 `
-component.joinClass = ``
-
+component.joinClass = `
+    <div class="title">Available Class</div>
+    <div class="content_container">
+        <table class="show_class_table table">
+            <thead>
+                <tr>
+                    <th>Class Name</th>
+                    <th>Subject</th>
+                    <th>Duration</th>
+                    <th>Class Time</th>
+                    <th>Room</th>
+                    <th>Teacher</th>
+                    <th>Capacity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+`
+component.timetable = `
+    <div class="title">My schedules</div>
+    <div class="content_container table-responsive-lg">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><button class="page-link" id="decrease_week"><i class="fa-solid fa-chevron-left"></i></button></li>
+            <li class="page-item"><input type="week" class="page-link" id="timetable_week"></li>
+            <li class="page-item"><button class="page-link" id="increase_week"><i class="fa-solid fa-chevron-right"></i></button></li>
+        </ul>
+        <table class="schedules table table-striped">
+            <thead>
+                <tr>
+                    <th class="col-1">Time</th>
+                    <th class="col-1">Mon</th>
+                    <th class="col-1">Tue</th>
+                    <th class="col-1">Wed</th>
+                    <th class="col-1">Thu</th>
+                    <th class="col-1">Fri</th>
+                    <th class="col-1">Sat</th>
+                    <th class="col-1">Sun</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+`
+component.scorePage = `
+<div class="title">My Grade</div>
+<div class="content_container">
+    <div class = "table-responsive-lg">
+        <table class="all_subject_score table">
+            <thead>
+                <tr>
+                    <th class="col-1">Class</th>
+                    <th class="col-1">Subject</th>
+                    <th class="col-1">Participation</th>
+                    <th class="col-1">Assignment</th>
+                    <th class="col-1">Test</th>
+                    <th class="col-1">Exam</th>
+                    <th class="col-1">Final</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>`
 
 component.teacherPage = `
     <div class="main_page_container">
@@ -443,12 +512,12 @@ component.teacherPage = `
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>My Class</span>
                 </li>
-                <li class="side_bar_item">
+                <li class="side_bar_item" id="grading_page">
                     <i class="fa-solid fa-book-open-reader"></i> 
                     <span>Grading</span>
                 </li>
-                <li class="side_bar_item">
-                    <i class="fa-regular fa-pen-to-square"></i>
+                <li class="side_bar_item" id="teacher_timetable">
+                    <i class="fa-regular fa-calendar"></i>
                     <span>My Schedules</span>
                 </li>
                 <li class="side_bar_item">
@@ -459,6 +528,7 @@ component.teacherPage = `
         </aside>
         <div class="content_container container-fluid" style="padding-left: 0;padding-right: 0;">
             <div class="navbar">
+                <div id="system_time"></div>
                 <img src="../img/default_avatar.jpg" alt="avatar" class="avatar" draggable="false">
                 <button id="log_out_btn" class="btn btn-primary" style="margin: 0 10px;">Log out</button>
             </div>
@@ -486,33 +556,104 @@ component.teacherPage = `
         </div>
     </div>
 `
-
 component.teacherProfile = `
-    <div class="title">Student Profile</div>
-    <div class="content_container">
-        <form id="user_info_form">
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col">
-                        <label for="last_name" class="form-label">Last name</label>
-                        <input id="last_name" type="text" class="form-control" placeholder="Nguyen Van" autocomplete="off">
-                    </div>
-                    <div class="col">
-                        <label for="first_name" class="form-label">First name</label>
-                        <input id="first_name" type="text" class="form-control" placeholder="A" autocomplete="off">
-                    </div>
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <img class="teacher_avatar" src="../img/default_avatar.jpg">
+                    <!-- <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <button class="btn btn-primary" type="button">Upload new image</button> -->
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="phone_number" class="form-label">Phone number</label>
-                <input id="phone_number" type="text" class="form-control" placeholder="0123456789" autocomplete="off">
+        </div>
+        <div class="col-xl-8">
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form id="user_info_form">
+                        <div class="mb-3">
+                            <label class="small mb-1" for="name">Teacher name</label>
+                            <input class="form-control" id="name" type="text" disabled>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="email">Email address</label>
+                                <input class="form-control" id="email" type="email" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="profession">Profession</label>
+                                <input class="form-control" id="profession" type="text" disabled>
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="phone_number">Phone number</label>
+                                <input class="form-control" id="phone_number" type="tel" placeholder="Enter your phone number" autocomplete="off">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="DOB">Date of birth</label>
+                                <input class="form-control" id="DOB" type="date" name="birthday">
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="gender">Gender</label>
+                                <select id="gender" class="form-select">
+                                    <option value="..." selected>...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="address">Address</label>
+                                <input class="form-control" id="address" type="text" placeholder="Enter your address" autocomplete="off">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="DOB" class="form-label">Date of birth</label>
-                <input id="DOB" type="date" class="form-control" autocomplete="off">
+        </div>
+    </div>
+</div>
+`
+component.gradingPage = `
+    <div class="title">Student Grade</div>
+    <div class="content_container">
+        <div class="class_select_wrapper mb-3 d-flex justify-content-center">
+            <div class="select_btn" style="width: 400px;">
+                <input type="text" readonly value="Choose a class" name="f">
+                <i class="fa-solid fa-chevron-down"></i>
             </div>
-            <button class="btn btn-primary">Save change</button>
-        </form>
+            <button class="btn btn-primary ms-1" id="load_class_student">Load</button>
+            <div class="content">
+                <div class="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="search" autocomplete="off" class="form-control" id="search">
+                </div>
+                <ul class="options"></ul>
+            </div>
+        </div>
+        <div class = "table-responsive-lg">
+            <table class="score_board table">
+                <thead>
+                    <tr>
+                        <th class="col-2">Name</th>
+                        <th class="col-1">Participation</th>
+                        <th class="col-1">Assignment</th>
+                        <th class="col-1">Test</th>
+                        <th class="col-1">Exam</th>
+                        <th class="col-1">Final</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <button class="btn btn-primary" id="save_score">Save</button>
     </div>
 `
 

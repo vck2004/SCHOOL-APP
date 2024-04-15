@@ -1,0 +1,61 @@
+/* timetable */
+.schedules td,.schedules tr th {
+    position: relative;
+    min-width: 116px;
+}
+.schedules .card {
+    overflow: hidden;
+    cursor: pointer;
+}
+.schedules .card:hover {
+    position: absolute;
+    background-color: #084298;
+    z-index: 999;
+    width: 86%;
+    height: auto !important;
+}
+.schedules .card-body:hover {
+    background-color: #084298;
+}
+
+/* course table */
+.show_class_table button {
+    margin: 0 3px;
+}
+
+@media screen and (max-width: 768px) {
+    .schedules tbody tr {
+        position: relative;
+    }
+    .schedules tbody th {
+        position: sticky;
+        left: 0;
+        z-index: 9999;
+    }
+
+    .show_class_table thead {
+        display: none;
+    }
+    .show_class_table, .show_class_table tbody, .show_class_table tr, .show_class_table td {
+        display: block;
+        width: 100%;
+    }
+    .show_class_table tr {
+        margin-bottom: 20px;
+    }
+    .show_class_table tbody tr td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: 1px solid #dee2e6;
+    }
+    .show_class_table td::before{
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        text-align: left;
+        font-weight: bold;
+        padding-left: 15px;
+    }
+}

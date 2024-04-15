@@ -42,8 +42,10 @@
     position: sticky;
     top: 0;
     justify-content: flex-end;
+}
+.main_page_container .navbar #system_time{
     color: white;
-    font-family: 'Rajdhani', sans-serif;
+    margin-right: 10px;
 }
 
 .main_page_container #main_content {
