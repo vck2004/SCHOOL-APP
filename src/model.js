@@ -8,7 +8,7 @@ const model = {}
 
 model.currentUser = undefined;
 model.courses = undefined;
-model.currentTime = DateTime.now();
+model.currentTime = DateTime.now().plus({week: 3});
 
 model.login = (data) => {
     signInWithEmailAndPassword(auth, data.email, data.password)
@@ -157,7 +157,11 @@ model.updateClass = async (classID,action) => {
                     })
                 })
                 await updateDoc(doc(db,"users",model.currentUser.uid),{
-                    joinedClass: arrayUnion(classID),
+                    joinedClass: arrayUnion({
+                        classID: classID,
+                        subject: data.subject,
+                        name: data.name
+                    }),
                     timetable: arrayUnion({
                         classID: classID,
                         subject: data.subject,
@@ -180,7 +184,11 @@ model.updateClass = async (classID,action) => {
                 })
             })
             await updateDoc(doc(db,"users",model.currentUser.uid),{
-                joinedClass: arrayRemove(classID),
+                joinedClass: arrayRemove({
+                    classID: classID,
+                    subject: data.subject,
+                    name: data.name
+                }),
                 timetable: arrayRemove({
                     classID: classID,
                     subject: data.subject,
@@ -200,6 +208,20 @@ model.updateClass = async (classID,action) => {
         view.alertSuccess("#f","Success");
     } catch (error) {
         view.alertError("#f",error.message);
+    }
+}
+model.getMyScore = async () => {
+    let finalArr = [];
+    for(let info of model.currentUser.joinedClass){
+        const scoreList = (await getDoc(doc(db,"classes",info.classID))).get("studentList");
+        for(let scores of scoreList) {
+            if(scores.studentID === model.currentUser.uid) {
+                finalArr.push([info.name,info.subject,scores.studentGrade]);
+            }
+        }
+    }
+    for(let info of finalArr){
+        view.setStudentGrade(info[0],info[1],info[2]);
     }
 }
 

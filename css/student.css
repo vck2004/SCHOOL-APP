@@ -47,6 +47,10 @@
     padding: 30px;
 }
 
+.all_subject_score th {
+    min-width: 118px;
+}
+
 @media screen and (max-width: 768px) {
     .profile_container .basic_info_container h1 {
         font-size: 1.375rem;

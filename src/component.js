@@ -305,7 +305,7 @@ component.studentPage = `
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>Class Info</span>
                 </li>
-                <li class="side_bar_item">
+                <li class="side_bar_item" id="student_score_page">
                     <i class="fa-solid fa-book-open-reader"></i>
                     <span>Score</span>
                 </li>
@@ -475,6 +475,26 @@ component.timetable = `
         </table>
     </div>
 `
+component.scorePage = `
+<div class="title">My Grade</div>
+<div class="content_container">
+    <div class = "table-responsive-lg">
+        <table class="all_subject_score table">
+            <thead>
+                <tr>
+                    <th class="col-1">Class</th>
+                    <th class="col-1">Subject</th>
+                    <th class="col-1">Participation</th>
+                    <th class="col-1">Assignment</th>
+                    <th class="col-1">Test</th>
+                    <th class="col-1">Exam</th>
+                    <th class="col-1">Final</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>`
 
 component.teacherPage = `
     <div class="main_page_container">
@@ -606,7 +626,7 @@ component.gradingPage = `
     <div class="content_container">
         <div class="class_select_wrapper mb-3 d-flex justify-content-center">
             <div class="select_btn" style="width: 400px;">
-                <input type="text" readonly value="Choose a class">
+                <input type="text" readonly value="Choose a class" name="f">
                 <i class="fa-solid fa-chevron-down"></i>
             </div>
             <button class="btn btn-primary ms-1" id="load_class_student">Load</button>

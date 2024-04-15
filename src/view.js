@@ -286,6 +286,11 @@ view.setActiveScreen = (screenName) => {
                 })
                 view.setTimetable(targetWeek);
             })
+            document.getElementById('student_score_page').addEventListener('click',() => {
+                mainContent.innerHTML = component.scorePage;
+                document.querySelector(".all_subject_score tbody").innerHTML = "";
+                model.getMyScore();
+            })
             break;
     }
 }
@@ -418,14 +423,28 @@ view.setClassGrade = (classID) => {
         let row = document.createElement("tr");
         row.innerHTML = `
             <td id="${grades.studentID}">${grades.studentName}</td>
-            <td><input class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[0]}"></td>
-            <td><input class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[1]}"></td>
-            <td><input class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[2]}"></td>
-            <td><input class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[3]}"></td>
+            <td><input name="f" class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[0]}"></td>
+            <td><input name="f" class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[1]}"></td>
+            <td><input name="f" class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[2]}"></td>
+            <td><input name="f" class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[3]}"></td>
             <td>${(grades.studentGrade[0]*0.1+grades.studentGrade[1]*0.1+grades.studentGrade[2]*0.3+grades.studentGrade[3]*0.5)}</td>
         `
         gradeTable.appendChild(row);
     }
+}
+view.setStudentGrade = (name,subject,scores) => {
+    const table = document.querySelector(".all_subject_score tbody");
+    let row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${name}</td>
+        <td>${subject}</td>
+        <td>${scores[0]}</td>
+        <td>${scores[1]}</td>
+        <td>${scores[2]}</td>
+        <td>${scores[3]}</td>
+        <td>${(scores[0]*0.1+scores[1]*0.1+scores[2]*0.3+scores[3]*0.5)}</td>
+    `
+    table.appendChild(row);
 }
 
 

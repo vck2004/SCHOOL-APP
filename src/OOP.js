@@ -21,7 +21,9 @@ class student extends user {
         super(uid,email,title);
         this.name = data.name;
         this.timetable = data.timetable;
+        this.joinedClass = data.joinedClass;
     }
+    myScores = [];
     setUserProfile(data){
         this.phoneNumber = data.phoneNumber? data.phoneNumber : "";
         this.dateOfBirth = data.dateOfBirth? data.dateOfBirth : "";
@@ -66,6 +68,9 @@ class courses {
         data.forEach((doc) => {
             let obj = doc.data();
             obj.classID = doc.id;
+            obj.studentList = obj.studentList.map((ele) => {
+                return ele.studentID;
+            })
             this.futureCourses.push(obj);
         })
     }
@@ -74,6 +79,9 @@ class courses {
         data.forEach((doc) => {
             let obj = doc.data();
             obj.classID = doc.id;
+            obj.studentList = obj.studentList.map((ele) => {
+                return ele.studentID;
+            })
             this.futureCourses.push(obj);
         })
     }
