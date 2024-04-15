@@ -76,4 +76,21 @@ controller.addClass = (data) => {
     }
 }
 
+controller.loadClass = (data) => {
+    if(data.name !== 'Choose a class') {
+        model.getClass(data);
+    }
+}
+controller.saveScore = (data,classID) => {
+    for(let obj of data){
+        for(let i=0;i<4;i++){
+            if(obj.studentGrade[i] > 10 || obj.studentGrade[i] < 0){
+                view.alertError("#save_score","There are invalid score");
+                return;
+            }
+        }
+    }
+    model.uploadScore(data,classID);
+}
+
 export {controller}

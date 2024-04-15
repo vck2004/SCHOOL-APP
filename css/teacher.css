@@ -3,3 +3,16 @@
     margin-bottom: 0.5rem;
     width: 300px;
 }
+
+#main_content .class_select_wrapper {
+    position: relative;
+}
+.class_select_wrapper.active .content {
+    display: block !important;
+    top: 35px;
+    max-width: 454px;
+}
+
+.score_board th {
+    min-width: 118px;
+}

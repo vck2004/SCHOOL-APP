@@ -1,7 +1,7 @@
 import {controller} from './controller.js';
 import {component} from './component.js';
 import { model } from './model.js';
-import { DateTime, Interval } from 'luxon';
+import { DateTime } from 'luxon';
 
 const view = {}
 
@@ -121,7 +121,6 @@ view.setActiveScreen = (screenName) => {
                     controller.addClass(data);
                 })
             })
-            
             break;
         case 'teacherPage':
             document.getElementById('app').innerHTML = component.teacherPage;
@@ -182,6 +181,44 @@ view.setActiveScreen = (screenName) => {
                     }
                 })
                 view.setTimetable(targetWeek);
+            })
+            document.getElementById('grading_page').addEventListener('click',() => {
+                mainContent.innerHTML = component.gradingPage;
+                
+                view.addClassOptions(model.currentUser.classIncharge);
+                const wrapper = document.querySelector('.class_select_wrapper');
+                const selectBtn = wrapper.querySelector('.select_btn');
+                const inp = wrapper.querySelector("#search");
+                selectBtn.addEventListener("click",() => {
+                    wrapper.classList.toggle("active");
+                })
+                inp.addEventListener("keyup",() => {
+                    let found = [];
+                    let searched = inp.value.toLowerCase();
+                    found = model.currentUser.classIncharge.filter((data) => {
+                        let realData = data.name;
+                        return realData.toLowerCase().startsWith(searched);
+                    })
+                    view.addClassOptions(found);
+                })
+                document.getElementById("load_class_student").addEventListener("click",() => {
+                    controller.loadClass({classID: selectBtn.id, name: selectBtn.firstElementChild.value});
+                })
+                document.getElementById("save_score").addEventListener("click",() => {
+                    const gradeTable = document.querySelector(".score_board tbody");
+                    let saveData = [];
+                    for(let row of gradeTable.children){
+                        saveData.push({
+                            studentID: row.children[0].id,
+                            studentName: row.children[0].innerText,
+                            studentGrade: [row.children[1].firstChild.value,
+                                            row.children[2].firstChild.value,
+                                            row.children[3].firstChild.value,
+                                            row.children[4].firstChild.value]
+                        })
+                    }
+                    controller.saveScore(saveData,gradeTable.id);
+                })
             })
             break;
         case 'studentPage':
@@ -336,10 +373,10 @@ view.setTimetable = (targetWeek) => {
     let ISOtargetWeek = targetWeek.toISOWeekDate().substring(0,8)
     let schedulesTable = document.querySelector('.schedules tbody');
     schedulesTable.innerHTML = "";
-    for(let i = 7;i<18;i++){
+    for(let i = 7;i<17;i++){
         let row = document.createElement("tr");
         row.innerHTML = `
-            <th>${i}:00</th>
+            <th>${i}:00 - ${i+1}:00</th>
             <td class="0"></td>
             <td class="1"></td>
             <td class="2"></td>
@@ -353,10 +390,10 @@ view.setTimetable = (targetWeek) => {
     for(let classInfo of model.currentUser.timetable) {
         if(classInfo.beginWeek <= ISOtargetWeek && classInfo.endWeek >= ISOtargetWeek){
             const start = model.currentTime.startOf('day').plus({hours: 7});
-            const end = model.currentTime.endOf('day').minus({hours: 6});
+            const end = model.currentTime.endOf('day').minus({hours: 7});
             let cells = [];
             for(let period = start;period <= end;period = period.plus({hour: 1})){
-                if(classInfo.beginTime <= period.toFormat('T') && period.toFormat('T') <= classInfo.endTime) {
+                if(classInfo.beginTime <= period.toFormat('T') && period.toFormat('T') < classInfo.endTime) {
                     for(let cell of schedulesTable.children[period.hour-7].children){
                         if(cell.classList[0] == classInfo.weekday) cells.push(cell);
                     }
@@ -371,6 +408,23 @@ view.setTimetable = (targetWeek) => {
                 if(cell.innerHTML == "") cell.remove();
             }
         }
+    }
+}
+view.setClassGrade = (classID) => {
+    const gradeTable = document.querySelector(".score_board tbody");
+    gradeTable.id = classID;
+    gradeTable.innerHTML = "";
+    for(let grades of model.currentUser.studentList){
+        let row = document.createElement("tr");
+        row.innerHTML = `
+            <td id="${grades.studentID}">${grades.studentName}</td>
+            <td><input class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[0]}"></td>
+            <td><input class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[1]}"></td>
+            <td><input class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[2]}"></td>
+            <td><input class="form-control" type="number" min="0" max="10" value="${grades.studentGrade[3]}"></td>
+            <td>${(grades.studentGrade[0]*0.1+grades.studentGrade[1]*0.1+grades.studentGrade[2]*0.3+grades.studentGrade[3]*0.5)}</td>
+        `
+        gradeTable.appendChild(row);
     }
 }
 
@@ -451,6 +505,26 @@ view.addOptions = (array) => {
             sub.value = e.target.innerText.split(" - ")[0];
         })
         opt.appendChild(li);
+    })
+}
+view.addClassOptions = (array) => {
+    const wrapper = document.querySelector('.class_select_wrapper'),
+    selectBtn = wrapper.querySelector('.select_btn'),
+    opt = wrapper.querySelector(".options");
+    opt.innerHTML = array.length ? "" : `<p>No result found!</p>`;
+    const todayWeek = model.currentTime.toISOWeekDate().substring(0,8);
+    array.forEach((data) => {
+        if(todayWeek >= data.beginWeek) {
+            let li = document.createElement("li");
+            li.id = data.classID;
+            li.innerHTML = data.name;
+            li.addEventListener("click",(e) => {
+                wrapper.classList.remove("active");
+                selectBtn.id = e.target.id;
+                selectBtn.firstElementChild.value = e.target.innerText;
+            })
+            opt.appendChild(li);
+        }
     })
 }
 

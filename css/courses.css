@@ -1,5 +1,5 @@
 /* timetable */
-.schedules td {
+.schedules td,.schedules tr th {
     position: relative;
     min-width: 116px;
 }

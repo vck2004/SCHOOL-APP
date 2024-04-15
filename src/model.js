@@ -4,8 +4,6 @@ import {doc, updateDoc, getDoc, setDoc,query,collection,where,getDocs, addDoc, a
 import { view } from './view.js';
 import { DateTime } from 'luxon';
 
-//improve the student register to be more computer side
-
 const model = {}
 
 model.currentUser = undefined;
@@ -98,7 +96,11 @@ model.addClass = async (data) => {
         } else {
             const courseRef = await addDoc(collection(db,"classes"),data);
             await updateDoc(doc(db,"users",data.teacherID),{
-                classIncharge: arrayUnion(courseRef.id),
+                classIncharge: arrayUnion({
+                    classID: courseRef.id,
+                    name: data.name,
+                    beginWeek: data.beginWeek,
+                }),
                 timetable: arrayUnion({
                     classID: courseRef.id,
                     subject: data.subject,
@@ -148,7 +150,11 @@ model.updateClass = async (classID,action) => {
                 throw {message: "The classes are full!"};
             } else {
                 await updateDoc(doc(db,"classes",classID),{
-                    studentList: arrayUnion(model.currentUser.uid)
+                    studentList: arrayUnion({
+                        studentID: model.currentUser.uid,
+                        studentName: model.currentUser.name,
+                        studentGrade: [0,0,0,0],
+                    })
                 })
                 await updateDoc(doc(db,"users",model.currentUser.uid),{
                     joinedClass: arrayUnion(classID),
@@ -167,7 +173,11 @@ model.updateClass = async (classID,action) => {
         } else if(action == "rem") {
             const data = (await getDoc(doc(db,"classes",classID))).data();
             await updateDoc(doc(db,"classes",classID),{
-                studentList: arrayRemove(model.currentUser.uid)
+                studentList: arrayRemove({
+                    studentID: model.currentUser.uid,
+                    studentName: model.currentUser.name,
+                    studentGrade: [0,0,0,0],
+                })
             })
             await updateDoc(doc(db,"users",model.currentUser.uid),{
                 joinedClass: arrayRemove(classID),
@@ -216,5 +226,23 @@ model.updateClass = async (classID,action) => {
 //         view.alertError('#current_time button','Something went wrong, please try again');
 //     }
 // }
+
+// teacher
+model.getClass = async (data) => {
+    model.currentUser.studentList = (await getDoc(doc(db,"classes",data.classID))).get("studentList");
+    view.setClassGrade(data.classID);
+}
+model.uploadScore = async (data,classID) => {
+    try {
+        await updateDoc(doc(db,"classes",classID),{
+            studentList: data
+        })
+        model.currentUser.studentList = data;
+        view.setClassGrade(classID);
+        view.alertSuccess("#save_score","success");
+    } catch (error) {
+        view.alertError("#save_score",error.message);
+    }
+}
 
 export {model}

@@ -41,8 +41,10 @@ class teacher extends user {
         super(uid,email,title);
         this.profession = data.profession;
         this.name = data.name;
+        this.classIncharge = data.classIncharge;
         this.timetable = data.timetable;
     }
+    studentList = [];
     setUserProfile(data){
         this.phoneNumber = data.phoneNumber? data.phoneNumber : "";
         this.dateOfBirth = data.dateOfBirth? data.dateOfBirth : "";

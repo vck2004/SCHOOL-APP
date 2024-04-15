@@ -433,7 +433,7 @@ component.studentProfile = `
 component.joinClass = `
     <div class="title">Available Class</div>
     <div class="content_container">
-        <table class="show_class_table table table-bordered">
+        <table class="show_class_table table">
             <thead>
                 <tr>
                     <th>Class Name</th>
@@ -458,7 +458,7 @@ component.timetable = `
             <li class="page-item"><input type="week" class="page-link" id="timetable_week"></li>
             <li class="page-item"><button class="page-link" id="increase_week"><i class="fa-solid fa-chevron-right"></i></button></li>
         </ul>
-        <table class="schedules table table-bordered table-striped">
+        <table class="schedules table table-striped">
             <thead>
                 <tr>
                     <th class="col-1">Time</th>
@@ -492,7 +492,7 @@ component.teacherPage = `
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>My Class</span>
                 </li>
-                <li class="side_bar_item">
+                <li class="side_bar_item" id="grading_page">
                     <i class="fa-solid fa-book-open-reader"></i> 
                     <span>Grading</span>
                 </li>
@@ -601,6 +601,40 @@ component.teacherProfile = `
     </div>
 </div>
 `
-component.teacherTimetable = ``
+component.gradingPage = `
+    <div class="title">Student Grade</div>
+    <div class="content_container">
+        <div class="class_select_wrapper mb-3 d-flex justify-content-center">
+            <div class="select_btn" style="width: 400px;">
+                <input type="text" readonly value="Choose a class">
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <button class="btn btn-primary ms-1" id="load_class_student">Load</button>
+            <div class="content">
+                <div class="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="search" autocomplete="off" class="form-control" id="search">
+                </div>
+                <ul class="options"></ul>
+            </div>
+        </div>
+        <div class = "table-responsive-lg">
+            <table class="score_board table">
+                <thead>
+                    <tr>
+                        <th class="col-2">Name</th>
+                        <th class="col-1">Participation</th>
+                        <th class="col-1">Assignment</th>
+                        <th class="col-1">Test</th>
+                        <th class="col-1">Exam</th>
+                        <th class="col-1">Final</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <button class="btn btn-primary" id="save_score">Save</button>
+    </div>
+`
 
 export {component}
