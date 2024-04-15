@@ -5,10 +5,6 @@ import {onAuthStateChanged} from "firebase/auth";
 import {doc,getDoc,getDocs,collection,query,where} from "firebase/firestore";
 import {student,teacher,admin,courses} from './OOP.js';
 
-// async function getData(thing, id) {
-//     return (await getDoc(doc(db, thing, id))).data();
-// }
-
 onAuthStateChanged(auth, async (user) => {
     if(user) {
         const userDoc = (await getDoc(doc(db,"users",user.uid))).data();
