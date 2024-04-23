@@ -13,6 +13,10 @@
     border-radius: 4px;
     text-align: center;
     font-family: 'Rajdhani', sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .login_signup_container .welcome_message {
     width: 72%;
@@ -52,13 +56,21 @@
     margin: 40px 0;
 }
 
-/* .login_signup_container #forgot_password {
-    height: 37px;
-    margin-bottom: 20px;
-    text-align: right;
-    cursor: pointer;
+.login_signup_container #forgot_password {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
     font-family: 'Rajdhani', sans-serif;
-} */
+}
+.login_signup_container #forgot_password span:hover {
+    cursor: pointer;
+    color: #044CC8;
+}
+
+.login_signup_container img {
+    width: 50%;
+    opacity: 30%;
+}
 
 @media screen and (max-width: 768px) {
     .login_signup_container .form_container {
